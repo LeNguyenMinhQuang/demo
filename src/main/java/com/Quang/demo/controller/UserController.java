@@ -1,38 +1,33 @@
 package com.Quang.demo.controller;
 
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
 
+import com.Quang.demo.domain.User;
 import com.Quang.demo.service.UserService;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-// @RestController
 public class UserController {
-
-  // @Autowired : đây cũng là DI nhg ko nên dùng
-  // đây là dependency injection
-
   private final UserService userService;
+
   public UserController(UserService userService) {
     this.userService = userService;
   }
-@RequestMapping("/")
 
-  // demo userService và jsp
-  // public String getHomePage(){
-  //   // return this.userService.handleHello();
-  //   return "hello";
-  // }
+  @RequestMapping(value = "/admin/user")
+  public String getHomePage(Model model) {
+    model.addAttribute("newUser", new User());
+    return "/admin/user/create";
+  }
 
-  // demo Model
-  public String getHomePage(Model model){
-    String test = this.userService.handleHello();
-      model.addAttribute("quang_var", test);
-      model.addAttribute("quang_var2", "biến thứ 2");
-      return "hello";
-    }
-  
+  @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
+  public String requestMethodName(Model model, @ModelAttribute("newUser") User newUser) {
+    System.out.println("/admin/user/create run");
+    System.out.println(newUser);
+    return "/client/hello";
+  }
+
 }
