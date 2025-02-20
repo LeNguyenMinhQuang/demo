@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 // import jakarta.persistence.Table;
 
-// annotation để biến model thành table trong database
+// annotation để biến model thành table(entity, model) trong database
 @Entity
 // @Table(name = "nguoiDung") //đặt tên khác cho table trong database
 public class User {
