@@ -1,7 +1,21 @@
 package com.Quang.demo.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+// import jakarta.persistence.Table;
+
+// annotation để biến model thành table trong database
+@Entity
+// @Table(name = "nguoiDung") //đặt tên khác cho table trong database
 public class User {
+
+  // buộc phải có để khai báo id
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // tự sinh id (Auto, Table, Sequence, indentity)
   private long id;
+
   private String email;
   private String password;
   private String fullName;
@@ -11,14 +25,15 @@ public class User {
   public User() {
   }
 
-  public User(long id, String email, String password, String fullName, String address, String phone) {
-    this.id = id;
-    this.email = email;
-    this.password = password;
-    this.fullName = fullName;
-    this.address = address;
-    this.phone = phone;
-  }
+  // public User(long id, String email, String password, String fullName, String
+  // address, String phone) {
+  // this.id = id;
+  // this.email = email;
+  // this.password = password;
+  // this.fullName = fullName;
+  // this.address = address;
+  // this.phone = phone;
+  // }
 
   public long getId() {
     return id;
