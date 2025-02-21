@@ -1,5 +1,7 @@
 package com.Quang.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.Quang.demo.domain.User;
@@ -12,6 +14,18 @@ public class UserService {
 
   public UserService(UserRepositoty userRepositoty) {
     this.userRepositoty = userRepositoty;
+  }
+
+  public List<User> handleGetAllUser() {
+    return this.userRepositoty.findAll();
+  }
+
+  public List<User> handleGetUsersByEmail(String email) {
+    return this.userRepositoty.findAllByEmail(email);
+  }
+
+  public User handleGetUserByEmail(String email) {
+    return this.userRepositoty.findFirstByEmail(email);
   }
 
   public User handleSaveUser(User newUser) {
