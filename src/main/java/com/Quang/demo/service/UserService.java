@@ -16,6 +16,10 @@ public class UserService {
     this.userRepositoty = userRepositoty;
   }
 
+  public User handleGetUserById(long id) {
+    return this.userRepositoty.findById(id);
+  }
+
   public List<User> handleGetAllUser() {
     return this.userRepositoty.findAll();
   }

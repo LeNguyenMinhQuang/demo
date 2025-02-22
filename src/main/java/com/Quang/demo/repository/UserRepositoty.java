@@ -15,6 +15,8 @@ public interface UserRepositoty extends JpaRepository<User, Long> {
 
   List<User> findAll();
 
+  User findById(long id);
+
   List<User> findAllByEmail(String email); // do là list nên trả về 1 list =>> nên đặt là findAll
 
   User findFirstByEmail(String email); // do là User nên trả về 1 giá trị đầu tiên tìm được =>> nên đặt là findFirst

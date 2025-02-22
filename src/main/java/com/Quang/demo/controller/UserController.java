@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Quang.demo.domain.User;
@@ -22,8 +23,17 @@ public class UserController {
     this.userRepositoty = userRepositoty;
   }
 
+  @RequestMapping(value = "/admin/user/{id}")
+  // PathVariable để lấy {params}
+  public String getAllUsers(Model model, @PathVariable long id) {
+    System.out.println("id: " + id);
+    User user = this.userService.handleGetUserById(id);
+    model.addAttribute("user", user);
+    return "/admin/user/detail";
+  }
+
   @RequestMapping(value = "/admin/user/")
-  public String getAllUsers(Model model) {
+  public String viewUser(Model model) {
     List<User> arrUsers = this.userService.handleGetAllUser();
     model.addAttribute("userList", arrUsers);
     return "/admin/user/getAll";

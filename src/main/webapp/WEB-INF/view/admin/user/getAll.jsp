@@ -21,6 +21,7 @@
             <div class="col-12 mx-auto">
               <div class="d-flex justify-content-between">
                 <h3>Table users</h3>
+                <!-- mặc định thẻ a là method get -->
                 <a href="/admin/user/create" class="btn btn-primary">Create new</a>
               </div>
               <hr />
@@ -41,9 +42,9 @@
                       <th>${user.fullName}</th>
                       <th>${user.email}</th>
                       <th>
-                        <button class="btn btn-success">View</button>
-                        <button class="btn btn-warning">Update</button>
-                        <button class="btn btn-danger">Delete</button>
+                        <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
+                        <a href="" class="btn btn-warning">Update</a>
+                        <a href="" class="btn btn-danger">Delete</a>
                       </th>
                     </tr>
                   </c:forEach>
