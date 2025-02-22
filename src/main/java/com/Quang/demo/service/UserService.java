@@ -37,4 +37,8 @@ public class UserService {
     return user;
   }
 
+  public void handleDeleteUser(long id) {
+    this.userRepositoty.deleteById(id);
+  }
+
 }

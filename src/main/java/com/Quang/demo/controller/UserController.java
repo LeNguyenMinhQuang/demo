@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import com.Quang.demo.domain.User;
 import com.Quang.demo.repository.UserRepositoty;
 import com.Quang.demo.service.UserService;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class UserController {
@@ -23,14 +22,14 @@ public class UserController {
     this.userRepositoty = userRepositoty;
   }
 
-  @RequestMapping(value = "/admin/user/")
+  @GetMapping("/admin/user")
   public String viewUser(Model model) {
     List<User> arrUsers = this.userService.handleGetAllUser();
     model.addAttribute("userList", arrUsers);
     return "/admin/user/getAll";
   }
 
-  @RequestMapping(value = "/admin/user/{id}")
+  @GetMapping("/admin/user/{id}")
   // PathVariable để lấy {params}
   public String getAllUsers(Model model, @PathVariable long id) {
     User user = this.userService.handleGetUserById(id);
@@ -38,7 +37,7 @@ public class UserController {
     return "/admin/user/detail";
   }
 
-  @RequestMapping(value = "/test")
+  @GetMapping("/test")
   public String getTest(Model model) {
     List<User> arrUsers = this.userService.handleGetUsersByEmail("quang@quang.com");
     User user = this.userService.handleGetUserByEmail("quang@quang.com");
@@ -47,28 +46,28 @@ public class UserController {
     return "/client/hello";
   }
 
-  @RequestMapping(value = "/admin/user/create")
+  @GetMapping("/admin/user/create")
   public String getUserCreatePage(Model model) {
     model.addAttribute("newUser", new User());
     // newUser trên sẽ liên kết vs modelAttribute trong trang view
     return "/admin/user/create";
   }
 
-  @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
+  @PostMapping("/admin/user/create")
   public String createUser(Model model, @ModelAttribute("newUser") User newUser) {
     this.userService.handleSaveUser(newUser);
     // redirect: chuyển hướng đến link khác
-    return "redirect:/admin/user/";
+    return "redirect:/admin/user";
   }
 
-  @RequestMapping(value = "/admin/user/update/{id}")
+  @GetMapping("/admin/user/update/{id}")
   public String getUserUpdatePage(Model model, @PathVariable long id) {
     User user = this.userService.handleGetUserById(id);
     model.addAttribute("user", user);
     return "/admin/user/update";
   }
 
-  @RequestMapping(value = "/admin/user/update/", method = RequestMethod.POST)
+  @PostMapping("/admin/user/update/")
   public String updateUser(Model model, @ModelAttribute("user") User user) {
     User currentUser = this.userService.handleGetUserById(user.getId());
     if (currentUser != null) {
@@ -78,14 +77,24 @@ public class UserController {
       currentUser.setAddress(user.getAddress());
       this.userService.handleSaveUser(currentUser);
     }
-    return "redirect:/admin/user/";
+    return "redirect:/admin/user";
   }
 
-  @RequestMapping(value = "/admin/user/delete/{id}")
+  @GetMapping("/admin/user/delete/{id}")
   public String getUserDeletePage(Model model, @PathVariable long id) {
-    User user = this.userService.handleGetUserById(id);
+    model.addAttribute("id", id);
+    User user = new User();
+    user.setId(id);
     model.addAttribute("user", user);
     return "/admin/user/delete";
+  }
+
+  @PostMapping("/admin/user/delete")
+  public String deleteUser(Model model, @ModelAttribute("user") User user) {
+    this.userService.handleDeleteUser(user.getId());
+    System.out.println("show:" + user.getId());
+    // redirect: chuyển hướng đến link khác
+    return "redirect:/admin/user";
   }
 
 }

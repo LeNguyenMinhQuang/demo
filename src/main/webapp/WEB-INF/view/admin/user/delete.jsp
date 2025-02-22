@@ -19,11 +19,15 @@
         <div class="container mt-5">
           <div class="row">
             <div class="col-md6 col-12 mx-auto">
-              <h3>Delete user with id: ${user.id}?</h3>
-              <div>
-                <a href="/" class="btn btn-danger">Yes</a>
-                <a href="/admin/user" class="btn btn-primary">No</a>
-              </div>
+              <h3>Delete user with id: ${id}?</h3>
+              <form:form action="/admin/user/delete" method="post" modelAttribute="user">
+                <div class="mb-3" style="display: none;">
+                  <label class="form-label">Id:</label>
+                  <form:input type="text" class="form-control" path="id" />
+                </div>
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <a href="/admin/user/" class="btn btn-primary">No</a>
+              </form:form>
             </div>
           </div>
         </div>
