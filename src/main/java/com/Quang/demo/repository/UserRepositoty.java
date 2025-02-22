@@ -10,9 +10,14 @@ import java.util.List;
 @Repository
 // public interface UserRepositoty extends CrudRepository<User, Long> {
 public interface UserRepositoty extends JpaRepository<User, Long> {
+  // định nghĩa các function để gọi bên service
   User save(User newUser);
+
+  List<User> findAll();
 
   List<User> findAllByEmail(String email); // do là list nên trả về 1 list =>> nên đặt là findAll
 
   User findFirstByEmail(String email); // do là User nên trả về 1 giá trị đầu tiên tìm được =>> nên đặt là findFirst
+  // findTop2 => trả về 2, top3 => 3
+
 }

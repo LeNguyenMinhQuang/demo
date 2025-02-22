@@ -22,11 +22,11 @@ public class UserController {
     this.userRepositoty = userRepositoty;
   }
 
-  @RequestMapping(value = "/")
-  public String getHomePage(Model model) {
+  @RequestMapping(value = "/admin/user/")
+  public String getAllUsers(Model model) {
     List<User> arrUsers = this.userService.handleGetAllUser();
-    System.out.println(arrUsers);
-    return "/client/hello";
+    model.addAttribute("userList", arrUsers);
+    return "/admin/user/getAll";
   }
 
   @RequestMapping(value = "/test")
@@ -38,18 +38,18 @@ public class UserController {
     return "/client/hello";
   }
 
-  @RequestMapping(value = "/admin/user")
+  @RequestMapping(value = "/admin/user/create")
   public String getUserCreatePage(Model model) {
     model.addAttribute("newUser", new User());
+    // newUser trên sẽ liên kết vs modelAttribute trong trang đích
     return "/admin/user/create";
   }
 
   @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
   public String createUser(Model model, @ModelAttribute("newUser") User newUser) {
-    System.out.println("/admin/user/create run");
-    System.out.println(newUser);
     this.userService.handleSaveUser(newUser);
-    return "/client/hello";
+    // redirect: chuyển hướng đến link khác
+    return "redirect:/admin/user/";
   }
 
 }
