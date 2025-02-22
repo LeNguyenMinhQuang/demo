@@ -23,20 +23,19 @@ public class UserController {
     this.userRepositoty = userRepositoty;
   }
 
-  @RequestMapping(value = "/admin/user/{id}")
-  // PathVariable để lấy {params}
-  public String getAllUsers(Model model, @PathVariable long id) {
-    System.out.println("id: " + id);
-    User user = this.userService.handleGetUserById(id);
-    model.addAttribute("user", user);
-    return "/admin/user/detail";
-  }
-
   @RequestMapping(value = "/admin/user/")
   public String viewUser(Model model) {
     List<User> arrUsers = this.userService.handleGetAllUser();
     model.addAttribute("userList", arrUsers);
     return "/admin/user/getAll";
+  }
+
+  @RequestMapping(value = "/admin/user/{id}")
+  // PathVariable để lấy {params}
+  public String getAllUsers(Model model, @PathVariable long id) {
+    User user = this.userService.handleGetUserById(id);
+    model.addAttribute("user", user);
+    return "/admin/user/detail";
   }
 
   @RequestMapping(value = "/test")
@@ -51,7 +50,7 @@ public class UserController {
   @RequestMapping(value = "/admin/user/create")
   public String getUserCreatePage(Model model) {
     model.addAttribute("newUser", new User());
-    // newUser trên sẽ liên kết vs modelAttribute trong trang đích
+    // newUser trên sẽ liên kết vs modelAttribute trong trang view
     return "/admin/user/create";
   }
 
@@ -60,6 +59,33 @@ public class UserController {
     this.userService.handleSaveUser(newUser);
     // redirect: chuyển hướng đến link khác
     return "redirect:/admin/user/";
+  }
+
+  @RequestMapping(value = "/admin/user/update/{id}")
+  public String getUserUpdatePage(Model model, @PathVariable long id) {
+    User user = this.userService.handleGetUserById(id);
+    model.addAttribute("user", user);
+    return "/admin/user/update";
+  }
+
+  @RequestMapping(value = "/admin/user/update/", method = RequestMethod.POST)
+  public String updateUser(Model model, @ModelAttribute("user") User user) {
+    User currentUser = this.userService.handleGetUserById(user.getId());
+    if (currentUser != null) {
+      // sửa và lưu user do ko có hàm update :((
+      currentUser.setFullName(user.getFullName());
+      currentUser.setPhone(user.getPhone());
+      currentUser.setAddress(user.getAddress());
+      this.userService.handleSaveUser(currentUser);
+    }
+    return "redirect:/admin/user/";
+  }
+
+  @RequestMapping(value = "/admin/user/delete/{id}")
+  public String getUserDeletePage(Model model, @PathVariable long id) {
+    User user = this.userService.handleGetUserById(id);
+    model.addAttribute("user", user);
+    return "/admin/user/delete";
   }
 
 }

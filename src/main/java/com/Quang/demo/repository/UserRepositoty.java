@@ -11,7 +11,7 @@ import java.util.List;
 // public interface UserRepositoty extends CrudRepository<User, Long> {
 public interface UserRepositoty extends JpaRepository<User, Long> {
   // định nghĩa các function để gọi bên service
-  User save(User newUser);
+  User save(User newUser); // save có thể cả create và update
 
   List<User> findAll();
 
