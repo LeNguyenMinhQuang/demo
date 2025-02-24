@@ -4,11 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
+import jakarta.persistence.Table;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
-// @Table(name = "nguoiDung") //đặt tên khác cho table trong database
+@Table(name = "products") // đặt tên khác cho table trong database
 public class Product {
 
   // buộc phải có để khai báo id

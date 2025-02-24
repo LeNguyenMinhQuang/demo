@@ -1,14 +1,17 @@
 package com.Quang.demo.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
-// @Table(name = "nguoiDung") //đặt tên khác cho table trong database
+@Table(name = "roles") // đặt tên khác cho table trong database
 public class Role {
 
   // buộc phải có để khai báo id
@@ -18,6 +21,10 @@ public class Role {
 
   private String name;
   private String description;
+
+  // 1 role - many user, 1 role có thể thuộc nhiều user
+  @OneToMany(mappedBy = "role")
+  private List<User> users;
 
   public Role() {
   }

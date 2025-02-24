@@ -4,11 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
-// @Table(name = "nguoiDung") //đặt tên khác cho table trong database
+@Table(name = "orders") // phải đặt tên vì ko thể tạo bảng order do trùng với phương thức orderBy của
+                        // sql
 public class Order {
 
   // buộc phải có để khai báo id
@@ -17,6 +20,11 @@ public class Order {
   private long id;
 
   private double totalPrice;
+
+  // user id, nhiều order thuộc về 1 user
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
   public Order() {
   }

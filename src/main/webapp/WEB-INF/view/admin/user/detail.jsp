@@ -21,7 +21,7 @@
             <div class="mx-auto">
               <div class="d-flex justify-content-between">
                 <h3>User detail: ${user.id}</h3>
-                <a href="/admin/user/" class="btn btn-primary">Back</a>
+                <a href="/admin/user" class="btn btn-primary">Back</a>
               </div>
               <hr />
               <div class="card" style="width: 60%">

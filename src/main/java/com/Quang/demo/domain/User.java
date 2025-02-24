@@ -1,14 +1,19 @@
 package com.Quang.demo.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
-// @Table(name = "nguoiDung") //đặt tên khác cho table trong database
+@Table(name = "users") // đặt tên khác cho table trong database
 public class User {
 
   // buộc phải có để khai báo id
@@ -22,6 +27,18 @@ public class User {
   private String address;
   private String phone;
   private String avatar;
+
+  // roleId: 1 user có 1 role, nhiều user có cùng 1 role -> many user - 1 role
+  // dùng joincolumn ở ownerSide(user có khóa ngoại) và mappedBy ở
+  // inverseSide(role) để ko bị tạo bảng thừa và ràng buộc 2 bảng gốc với nhau
+  @ManyToOne
+  @JoinColumn(name = "role_id") // join 2 bảng, định nghĩa 1 trường trong database (ở đây là thêm trường
+                                // role_id)
+  private Role role;
+
+  // 1 order của 1 user, 1 user có nhiều order => user 1 - many order
+  @OneToMany(mappedBy = "user")
+  private List<Order> orders;
 
   public User() {
   }
