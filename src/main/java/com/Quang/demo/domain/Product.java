@@ -1,10 +1,13 @@
 package com.Quang.demo.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
@@ -25,6 +28,12 @@ public class Product {
   private String sold;
   private String factory;
   private String target;
+
+  // detail: 1 detail chỉ mô tả 1 product, nhg 1 product thì có thể được miêu tả
+  // bởi nhiều detail -> one to many
+
+  @OneToMany(mappedBy = "product")
+  private List<OrderDetail> orderDetails;
 
   public Product() {
   }

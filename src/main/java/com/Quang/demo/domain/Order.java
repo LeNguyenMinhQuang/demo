@@ -1,11 +1,14 @@
 package com.Quang.demo.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // annotation để biến model thành table(entity, model) trong database
@@ -25,6 +28,12 @@ public class Order {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
+
+  // 1 detail chỉ thuộc về 1 order, nhg 1 order có thể có nhiều detail -> one to
+  // many
+
+  @OneToMany(mappedBy = "order")
+  private List<OrderDetail> orderDetails;
 
   public Order() {
   }

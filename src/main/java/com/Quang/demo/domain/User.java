@@ -36,7 +36,7 @@ public class User {
                                 // role_id)
   private Role role;
 
-  // 1 order của 1 user, 1 user có nhiều order => user 1 - many order
+  // 1 order của 1 user, 1 user có nhiều order = > user 1 - many order
   @OneToMany(mappedBy = "user")
   private List<Order> orders;
 
