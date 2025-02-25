@@ -9,17 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.Quang.demo.domain.User;
-import com.Quang.demo.repository.UserRepositoty;
 import com.Quang.demo.service.UserService;
 
 @Controller
 public class UserController {
   private final UserService userService;
-  private final UserRepositoty userRepositoty;
 
-  public UserController(UserService userService, UserRepositoty userRepositoty) {
+  public UserController(UserService userService) {
     this.userService = userService;
-    this.userRepositoty = userRepositoty;
   }
 
   @GetMapping("/admin/user")

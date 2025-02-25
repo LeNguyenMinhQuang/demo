@@ -31,7 +31,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
+    registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
   }
 }
 
-// https://howtodoinjava.com/spring-boot/spring-boot-jsp-view-example/ ---- chapter 4.2 == cấu hình trong application.properties
+// https://howtodoinjava.com/spring-boot/spring-boot-jsp-view-example/ ----
+// chapter 4.2 == cấu hình trong application.properties
