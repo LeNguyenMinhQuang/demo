@@ -1,4 +1,4 @@
-package com.Quang.demo.controller;
+package com.Quang.demo.controller.admin;
 
 import java.util.List;
 
