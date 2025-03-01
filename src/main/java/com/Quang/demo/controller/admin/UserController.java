@@ -23,7 +23,7 @@ public class UserController {
   public String viewUser(Model model) {
     List<User> arrUsers = this.userService.handleGetAllUser();
     model.addAttribute("userList", arrUsers);
-    return "/admin/user/getAll";
+    return "/admin/user/show";
   }
 
   @GetMapping("/admin/user/{id}")
