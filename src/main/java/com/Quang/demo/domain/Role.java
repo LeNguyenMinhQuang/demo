@@ -2,6 +2,7 @@ package com.Quang.demo.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class Role {
   private String description;
 
   // 1 role - many user, 1 role có thể thuộc nhiều user
-  @OneToMany(mappedBy = "role")
+  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
   private List<User> users;
 
   public Role() {

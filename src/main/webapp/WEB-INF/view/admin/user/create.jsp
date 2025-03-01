@@ -22,7 +22,8 @@
               <h3>Create an user</h3>
               <hr />
               <!-- JSPL chú ý form: và path và modelAttribute -->
-              <form:form action="/admin/user/create" method="post" modelAttribute="newUser" class="row">
+              <form:form action="/admin/user/create" method="POST" modelAttribute="newUser" class="row"
+                enctype="multipart/form-data">
                 <div class="mb-3 col-12 col-md-6">
                   <label class="form-label">Email:</label>
                   <form:input type="email" class="form-control" path="email" />
@@ -46,14 +47,17 @@
                 </div>
                 <div class="mb-3 col-12 col-md-6">
                   <label class="form-label">Role:</label>
-                  <select class="form-select">
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="USER">USER</option>
-                  </select>
+                  <!-- vì role trong user là một object sinh ra từ class Role, mà các option là String, nên ta phải để path đến role.name (là 1 String) -->
+                  <form:select class="form-select" path="role.name">
+                    <form:option value="ADMIN">ADMIN</form:option>
+                    <form:option value="USER">USER</form:option>
+                  </form:select>
                 </div>
                 <div class="mb-3 col-12 col-md-6">
                   <label for="avatarFile" class="form-label">Avatar:</label>
-                  <input type="file" class="form-control" id="avatarFile" accept=".png, .jpg, .jpeg">
+                  <!-- thuộc tính name để bên controller có thể getParams -->
+                  <input name="avatarFileUpload" type="file" class="form-control" id="avatarFile"
+                    accept=".png, .jpg, .jpeg">
                 </div>
                 <div class="col-12 mb-3">
                   <img style="max-height: 250px; display:none" alt="avatarPreview" id="avatarPreview">

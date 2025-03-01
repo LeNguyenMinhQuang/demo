@@ -50,8 +50,8 @@
                             <!-- forEach var items -->
                             <tr>
                               <th>${user.id}</th>
-                              <th>${user.fullName}</th>
                               <th>${user.email}</th>
+                              <th>${user.fullName}</th>
                               <th>
                                 <a href="/admin/user/${user.id}" class="btn btn-success">View</a>
                                 <a href="/admin/user/update/${user.id}" class="btn btn-warning">Update</a>

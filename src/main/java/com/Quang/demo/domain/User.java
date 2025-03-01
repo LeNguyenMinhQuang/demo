@@ -2,6 +2,7 @@ package com.Quang.demo.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class User {
   // roleId: 1 user có 1 role, nhiều user có cùng 1 role -> many user - 1 role
   // dùng joincolumn ở ownerSide(user có khóa ngoại) và mappedBy ở
   // inverseSide(role) để ko bị tạo bảng thừa và ràng buộc 2 bảng gốc với nhau
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "role_id") // join 2 bảng, định nghĩa 1 trường trong database (ở đây là thêm trường
                                 // role_id)
   private Role role;
@@ -103,6 +104,22 @@ public class User {
 
   public String getAvatar() {
     return avatar;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  public List<Order> getOrders() {
+    return orders;
+  }
+
+  public void setOrders(List<Order> orders) {
+    this.orders = orders;
   }
 
   public void setAvatar(String avatar) {

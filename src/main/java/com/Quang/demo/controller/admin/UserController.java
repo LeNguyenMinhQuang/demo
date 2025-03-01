@@ -8,16 +8,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.Quang.demo.domain.User;
+import com.Quang.demo.service.UploadService;
 import com.Quang.demo.service.UserService;
 
 @Controller
 public class UserController {
-  private final UserService userService;
 
-  public UserController(UserService userService) {
+  // đây là Depencencies injection
+  private final UserService userService;
+  private final UploadService uploadService;
+
+  public UserController(UserService userService, UploadService uploadService) {
     this.userService = userService;
+    this.uploadService = uploadService;
+
   }
+  //
 
   @GetMapping("/admin/user")
   public String viewUser(Model model) {
@@ -51,7 +61,13 @@ public class UserController {
   }
 
   @PostMapping("/admin/user/create")
-  public String createUser(Model model, @ModelAttribute("newUser") User newUser) {
+  // modelAttribute: lấy newUser từ form trong view
+  // requestParam: lấy input name: avatarFileUpload trong view
+  public String createUser(Model model, @ModelAttribute("newUser") User newUser,
+      @RequestParam("avatarFileUpload") MultipartFile file) {
+
+    String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+    newUser.setAvatar(avatar);
     this.userService.handleSaveUser(newUser);
     // redirect: chuyển hướng đến link khác
     return "redirect:/admin/user";
