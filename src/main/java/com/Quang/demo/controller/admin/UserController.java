@@ -2,6 +2,7 @@ package com.Quang.demo.controller.admin;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Quang.demo.domain.Role;
 import com.Quang.demo.domain.User;
+
+import com.Quang.demo.service.RoleService;
 import com.Quang.demo.service.UploadService;
 import com.Quang.demo.service.UserService;
 
@@ -20,12 +24,16 @@ public class UserController {
 
   // đây là Depencencies injection
   private final UserService userService;
+  private final RoleService roleService;
   private final UploadService uploadService;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserController(UserService userService, UploadService uploadService) {
+  public UserController(UserService userService, UploadService uploadService,
+      PasswordEncoder passwordEncoder, RoleService roleService) {
     this.userService = userService;
     this.uploadService = uploadService;
-
+    this.passwordEncoder = passwordEncoder;
+    this.roleService = roleService;
   }
   //
 
@@ -66,8 +74,21 @@ public class UserController {
   public String createUser(Model model, @ModelAttribute("newUser") User newUser,
       @RequestParam("avatarFileUpload") MultipartFile file) {
 
+    // avatar
     String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
     newUser.setAvatar(avatar);
+
+    // password
+    String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
+    newUser.setPassword(hashPassword);
+
+    // role
+    Role role = newUser.getRole();
+    String roleName = role.getName();
+    Role newRole = this.roleService.handleGetRole(roleName);
+    newUser.setRole(newRole);
+
+    // save
     this.userService.handleSaveUser(newUser);
     // redirect: chuyển hướng đến link khác
     return "redirect:/admin/user";

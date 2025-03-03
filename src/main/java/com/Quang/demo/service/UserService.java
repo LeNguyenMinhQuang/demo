@@ -9,12 +9,14 @@ import com.Quang.demo.repository.UserRepositoty;
 
 @Service
 public class UserService {
-
+  // DI
   private final UserRepositoty userRepositoty;
 
   public UserService(UserRepositoty userRepositoty) {
     this.userRepositoty = userRepositoty;
   }
+
+  // Services
 
   public User handleGetUserById(long id) {
     return this.userRepositoty.findById(id);

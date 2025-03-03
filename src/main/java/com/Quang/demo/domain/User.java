@@ -32,7 +32,8 @@ public class User {
   // roleId: 1 user có 1 role, nhiều user có cùng 1 role -> many user - 1 role
   // dùng joincolumn ở ownerSide(user có khóa ngoại) và mappedBy ở
   // inverseSide(role) để ko bị tạo bảng thừa và ràng buộc 2 bảng gốc với nhau
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne // (cascade = CascadeType.ALL) //đã fix bằng cách tạo 1 đối tượng role ở role
+             // repository
   @JoinColumn(name = "role_id") // join 2 bảng, định nghĩa 1 trường trong database (ở đây là thêm trường
                                 // role_id)
   private Role role;
