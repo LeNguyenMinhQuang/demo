@@ -102,13 +102,20 @@ public class UserController {
   }
 
   @PostMapping("/admin/user/update/")
-  public String updateUser(Model model, @ModelAttribute("user") User user) {
+  public String updateUser(Model model, @ModelAttribute("user") User user,
+      @RequestParam("avatarFileUpload") MultipartFile file) {
     User currentUser = this.userService.handleGetUserById(user.getId());
     if (currentUser != null) {
       // sửa và lưu user do ko có hàm update :((
       currentUser.setFullName(user.getFullName());
       currentUser.setPhone(user.getPhone());
       currentUser.setAddress(user.getAddress());
+
+      // avatar
+      String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+      currentUser.setAvatar(avatar);
+      // role
+      currentUser.setRole(this.roleService.handleGetRole(user.getRole().getName()));
       this.userService.handleSaveUser(currentUser);
     }
     return "redirect:/admin/user";

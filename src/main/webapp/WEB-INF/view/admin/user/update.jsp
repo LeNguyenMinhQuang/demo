@@ -22,7 +22,7 @@
               <h3>Update an user with id: ${user.id}</h3>
               <hr />
               <!-- JSPL chú ý form: và path và modelAttribute -->
-              <form:form action="/admin/user/update/" method="post" modelAttribute="user">
+              <form:form action="/admin/user/update/" method="post" modelAttribute="user" enctype="multipart/form-data">
                 <div class="mb-3" style="display: none;">
                   <label class="form-label">Id:</label>
                   <form:input type="text" class="form-control" path="id" readonly="true" />
@@ -43,6 +43,20 @@
                 <div class="mb-3">
                   <label class="form-label">Address:</label>
                   <form:input type="text" class="form-control" path="address" />
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                  <label class="form-label">Role:</label>
+                  <!-- vì role trong user là một object sinh ra từ class Role, mà các option là String, nên ta phải để path đến role.name (là 1 String) -->
+                  <form:select class="form-select" path="role.name">
+                    <form:option value="ADMIN">ADMIN</form:option>
+                    <form:option value="USER">USER</form:option>
+                  </form:select>
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                  <label for="avatarFile" class="form-label">Avatar:</label>
+                  <!-- thuộc tính name để bên controller có thể getParams -->
+                  <input name="avatarFileUpload" type="file" class="form-control" id="avatarFile"
+                    accept=".png, .jpg, .jpeg">
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
               </form:form>
