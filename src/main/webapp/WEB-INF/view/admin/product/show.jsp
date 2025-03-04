@@ -26,8 +26,47 @@
                 <h1 class="mt-4">Dashboard</h1>
                 <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">Dashboard</li>
+                  <li class="breadcrumb-item active">Product</li>
                 </ol>
-                <h1>product</h1>
+                <div class="container mt-5">
+                  <div class="row">
+                    <div class="col-12 mx-auto">
+                      <div class="d-flex justify-content-between">
+                        <h3>Table products</h3>
+                        <!-- mặc định thẻ a là method get -->
+                        <a href="/admin/product/create" class="btn btn-primary">Create new product</a>
+                      </div>
+                      <hr />
+                      <table class="table table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Price</th>
+                            <th>Factory</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <c:forEach var="product" items="${productList}">
+                            <!-- forEach var items -->
+                            <tr>
+                              <th>${product.id}</th>
+                              <th>${product.email}</th>
+                              <th>${product.fullName}</th>
+                              <th>${product.role.name}</th>
+                              <th>
+                                <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
+                                <a href="/admin/product/update/${product.id}" class="btn btn-warning">Update</a>
+                                <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
+                              </th>
+                            </tr>
+                          </c:forEach>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </main>
             <jsp:include page="../layout/footer.jsp" />
