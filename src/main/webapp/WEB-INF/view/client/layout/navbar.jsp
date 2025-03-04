@@ -24,19 +24,8 @@
       </button>
       <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
         <div class="navbar-nav mx-auto">
-          <a href="index.html" class="nav-item nav-link active">Home</a>
+          <a href="/" class="nav-item nav-link active">Home</a>
           <a href="shop.html" class="nav-item nav-link">Shop</a>
-          <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-          <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-            <div class="dropdown-menu m-0 bg-secondary rounded-0">
-              <a href="cart.html" class="dropdown-item">Cart</a>
-              <a href="chackout.html" class="dropdown-item">Chackout</a>
-              <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-              <a href="404.html" class="dropdown-item">404 Page</a>
-            </div>
-          </div>
-          <a href="contact.html" class="nav-item nav-link">Contact</a>
         </div>
         <div class="d-flex m-3 me-0">
           <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
@@ -53,5 +42,21 @@
         </div>
       </div>
     </nav>
+  </div>
+</div>
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex align-items-center">
+        <div class="input-group w-75 mx-auto d-flex">
+          <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+          <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
