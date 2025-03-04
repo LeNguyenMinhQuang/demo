@@ -11,6 +11,12 @@ import java.util.List;
 // public interface UserRepositoty extends CrudRepository<User, Long> {
 public interface ProductRepository extends JpaRepository<Product, Long> {
   // định nghĩa các function để gọi bên service
-  Product save(Product newUser); // save có thể cả create và update
+  Product save(Product newProduct); // save có thể cả create và update
+
+  List<Product> findAll();
+
+  Product findById(long id);
+
+  void deleteById(long id);
 
 }

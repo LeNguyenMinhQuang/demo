@@ -48,19 +48,19 @@
                 <div class="mb-3 col-12 col-md-6">
                   <label class="form-label">Factory:</label>
                   <form:select class="form-select" path="factory">
-                    <form:option value="ADMIN">Apple</form:option>
-                    <form:option value="USER">Asus</form:option>
-                    <form:option value="USER">Acer</form:option>
-                    <form:option value="USER">Lenovo</form:option>
-                    <form:option value="USER">Dell</form:option>
+                    <form:option value="Apple">Apple</form:option>
+                    <form:option value="Asus">Asus</form:option>
+                    <form:option value="Acer">Acer</form:option>
+                    <form:option value="Lenovo">Lenovo</form:option>
+                    <form:option value="Dell">Dell</form:option>
                   </form:select>
                 </div>
                 <div class="mb-3 col-12 col-md-6">
                   <label class="form-label">Target:</label>
                   <form:select class="form-select" path="target">
-                    <form:option value="ADMIN">Media</form:option>
-                    <form:option value="USER">Gaming</form:option>
-                    <form:option value="USER">Coding</form:option>
+                    <form:option value="Media">Media</form:option>
+                    <form:option value="Gaming">Gaming</form:option>
+                    <form:option value="Coding">Coding</form:option>
                   </form:select>
                 </div>
                 <div class="mb-3 col-12 col-md-6">

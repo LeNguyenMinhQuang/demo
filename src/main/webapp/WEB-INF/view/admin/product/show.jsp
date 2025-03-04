@@ -41,20 +41,20 @@
                         <thead>
                           <tr>
                             <th>ID</th>
-                            <th>Email</th>
+                            <th>Name</th>
                             <th>Price</th>
                             <th>Factory</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <c:forEach var="product" items="${productList}">
+                          <c:forEach var="product" items="${productsList}">
                             <!-- forEach var items -->
                             <tr>
                               <th>${product.id}</th>
-                              <th>${product.email}</th>
-                              <th>${product.fullName}</th>
-                              <th>${product.role.name}</th>
+                              <th>${product.name}</th>
+                              <th>${product.price}</th>
+                              <th>${product.factory}</th>
                               <th>
                                 <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
                                 <a href="/admin/product/update/${product.id}" class="btn btn-warning">Update</a>
