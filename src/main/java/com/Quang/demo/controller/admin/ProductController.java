@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Quang.demo.domain.Product;
 import com.Quang.demo.service.ProductService;
 import com.Quang.demo.service.UploadService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ProductController {
@@ -42,8 +46,19 @@ public class ProductController {
   @PostMapping("/admin/product/create")
   // modelAttribute: lấy newUser từ form trong view
   // requestParam: lấy input name: avatarFileUpload trong view
-  public String createUser(Model model, @ModelAttribute("newProduct") Product newProduct,
+  public String createUser(Model model, @ModelAttribute("newProduct") @Valid Product newProduct,
+      BindingResult productResult,
       @RequestParam("imageFileUpload") MultipartFile file) {
+
+    // validate
+    List<FieldError> errors = productResult.getFieldErrors();
+    for (FieldError error : errors) {
+      System.out.println(">>>>>" + error.getField() + " - " + error.getDefaultMessage());
+    }
+
+    if (productResult.hasErrors()) {
+      return "/admin/product/create";
+    }
 
     // image
     String image = this.uploadService.handleSaveUploadFile(file, "products");

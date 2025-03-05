@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.persistence.OneToMany;
 
 // annotation để biến model thành table(entity, model) trong database
@@ -19,8 +21,12 @@ public class Product {
   @GeneratedValue(strategy = GenerationType.IDENTITY) // tự sinh id (Auto, Table, Sequence, indentity)
   private long id;
 
+  @NotEmpty(message = "Name is not empty")
   private String name;
+
+  @Min(value = 0, message = "Price must be greater than 0")
   private double price;
+
   private String image;
   private String detailDesc;
   private String shortDesc;
