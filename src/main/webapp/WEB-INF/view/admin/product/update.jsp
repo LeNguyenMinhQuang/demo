@@ -22,43 +22,65 @@
               <h3>Update an user with id: ${user.id}</h3>
               <hr />
               <!-- JSPL chú ý form: và path và modelAttribute -->
-              <form:form action="/admin/user/update/" method="post" modelAttribute="user" enctype="multipart/form-data">
+              <form:form action="/admin/product/update/" method="post" modelAttribute="product"
+                enctype="multipart/form-data">
                 <div class="mb-3" style="display: none;">
                   <label class="form-label">Id:</label>
                   <form:input type="text" class="form-control" path="id" readonly="true" />
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">Email:</label>
-                  <form:input type="email" class="form-control" path="email" readonly="true" />
-                </div>
-                <div class=" mb-3">
-                  <label class="form-label">Phone Number:</label>
-                  <!-- path phải trùng với key của model trong domain -->
-                  <form:input type="text" class="form-control" path="phone" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Full Name:</label>
-                  <form:input type="text" class="form-control" path="fullName" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Address:</label>
-                  <form:input type="text" class="form-control" path="address" />
+                <div class="mb-3 col-12 col-md-6">
+                  <label class="form-label">Name:</label>
+                  <form:input type="text" class="form-control" path="name" />
                 </div>
                 <div class="mb-3 col-12 col-md-6">
-                  <label class="form-label">Role:</label>
-                  <!-- vì role trong user là một object sinh ra từ class Role, mà các option là String, nên ta phải để path đến role.name (là 1 String) -->
-                  <form:select class="form-select" path="role.name">
-                    <form:option value="ADMIN">ADMIN</form:option>
-                    <form:option value="USER">USER</form:option>
+                  <label class="form-label">Price:</label>
+                  <form:input type="number" class="form-control" path="price" />
+                </div>
+                <div class=" mb-3 col-12 col-md-6">
+                  <label class="form-label">Detail description:</label>
+                  <!-- path phải trùng với key của model trong domain -->
+                  <form:input type="text" class="form-control" path="detailDesc" />
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                  <label class="form-label">Short description:</label>
+                  <form:input type="text" class="form-control" path="shortDesc" />
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                  <label class="form-label">Quantity:</label>
+                  <form:input type="number" class="form-control" path="quantity" />
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                  <label class="form-label">Factory:</label>
+                  <form:select class="form-select" path="factory">
+                    <form:option value="Apple">Apple</form:option>
+                    <form:option value="Asus">Asus</form:option>
+                    <form:option value="Acer">Acer</form:option>
+                    <form:option value="Lenovo">Lenovo</form:option>
+                    <form:option value="Dell">Dell</form:option>
                   </form:select>
                 </div>
                 <div class="mb-3 col-12 col-md-6">
-                  <label for="avatarFile" class="form-label">Avatar:</label>
+                  <label class="form-label">Target:</label>
+                  <form:select class="form-select" path="target">
+                    <form:option value="Media">Media</form:option>
+                    <form:option value="Gaming">Gaming</form:option>
+                    <form:option value="Coding">Coding</form:option>
+                  </form:select>
+                </div>
+                <div class="mb-3 col-12 col-md-6">
+                  <label for="imageFile" class="form-label">Image:</label>
                   <!-- thuộc tính name để bên controller có thể getParams -->
-                  <input name="avatarFileUpload" type="file" class="form-control" id="avatarFile"
+                  <input name="imageFileUpload" type="file" class="form-control" id="imageFile"
                     accept=".png, .jpg, .jpeg">
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <div class="col-12 mb-3">
+                  <img style="max-height: 250px; display:none" alt="avatarPreview" id="avatarPreview">
+                </div>
+
+                <div class="col-12 mb-5">
+                  <button type="submit" class="btn btn-primary ">Update</button>
+                </div>
+
               </form:form>
 
             </div>

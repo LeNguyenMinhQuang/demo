@@ -2,7 +2,7 @@ package com.Quang.demo.domain;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+// import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +11,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
@@ -22,9 +25,17 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY) // tự sinh id (Auto, Table, Sequence, indentity)
   private long id;
 
+  @NotNull
+  @Email
   private String email;
+
+  @NotNull
+  @Min(6)
   private String password;
+
+  @NotNull
   private String fullName;
+
   private String address;
   private String phone;
   private String avatar;

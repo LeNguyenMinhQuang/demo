@@ -1,10 +1,13 @@
 package com.Quang.demo.controller.admin;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,8 @@ import com.Quang.demo.domain.User;
 import com.Quang.demo.service.RoleService;
 import com.Quang.demo.service.UploadService;
 import com.Quang.demo.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -71,8 +76,19 @@ public class UserController {
   @PostMapping("/admin/user/create")
   // modelAttribute: lấy newUser từ form trong view
   // requestParam: lấy input name: avatarFileUpload trong view
-  public String createUser(Model model, @ModelAttribute("newUser") User newUser,
+  // Valid, BindingResult: kiểm tra dữ liệu nhập vào, phải để BindingResult sau
+  // Valid
+  public String createUser(Model model,
+      @ModelAttribute("newUser") @Valid User newUser,
+      BindingResult bindingResult,
       @RequestParam("avatarFileUpload") MultipartFile file) {
+
+    // validate
+    List<FieldError> errors = bindingResult.getFieldErrors();
+    for (FieldError error : errors) {
+      System.err.println("Error: " + error.getDefaultMessage());
+      System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+    }
 
     // avatar
     String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");

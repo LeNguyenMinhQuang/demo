@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Quang.demo.domain.Product;
-import com.Quang.demo.domain.User;
 import com.Quang.demo.service.ProductService;
 import com.Quang.demo.service.UploadService;
 
@@ -77,6 +76,35 @@ public class ProductController {
     this.productService.handleDeleteProduct(product.getId());
     System.out.println("show:" + product.getId());
     // redirect: chuyển hướng đến link khác
+    return "redirect:/admin/product";
+  }
+
+  @GetMapping("/admin/product/update/{id}")
+  public String getProductUpdatePage(Model model, @PathVariable long id) {
+    Product product = this.productService.handleGetByID(id);
+    model.addAttribute("product", product);
+    return "/admin/product/update";
+  }
+
+  @PostMapping("/admin/product/update/")
+  public String updateProduct(Model model, @ModelAttribute("product") Product product,
+      @RequestParam("imageFileUpload") MultipartFile file) {
+    Product currentProduct = this.productService.handleGetByID(product.getId());
+    if (currentProduct != null) {
+      // sửa và lưu user do ko có hàm update :((
+      currentProduct.setName(product.getName());
+      currentProduct.setPrice(product.getPrice());
+      currentProduct.setDetailDesc(product.getDetailDesc());
+      currentProduct.setShortDesc(product.getShortDesc());
+      currentProduct.setQuantity(product.getQuantity());
+      currentProduct.setFactory(product.getFactory());
+      currentProduct.setTarget(product.getTarget());
+
+      String image = this.uploadService.handleSaveUploadFile(file, "products");
+      currentProduct.setImage(image);
+
+      this.productService.handleSaveProduct(currentProduct);
+    }
     return "redirect:/admin/product";
   }
 }
