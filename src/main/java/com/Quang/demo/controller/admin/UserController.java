@@ -80,14 +80,17 @@ public class UserController {
   // Valid
   public String createUser(Model model,
       @ModelAttribute("newUser") @Valid User newUser,
-      BindingResult bindingResult,
+      BindingResult newUserBindingResult,
       @RequestParam("avatarFileUpload") MultipartFile file) {
 
     // validate
-    List<FieldError> errors = bindingResult.getFieldErrors();
+    List<FieldError> errors = newUserBindingResult.getFieldErrors();
     for (FieldError error : errors) {
-      System.err.println("Error: " + error.getDefaultMessage());
-      System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+      System.out.println(">>>>>" + error.getField() + " - " + error.getDefaultMessage());
+    }
+
+    if (newUserBindingResult.hasErrors()) { // nếu có lỗi thì trả về trang create
+      return "/admin/user/create";
     }
 
     // avatar

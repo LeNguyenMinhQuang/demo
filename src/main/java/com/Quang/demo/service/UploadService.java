@@ -21,6 +21,10 @@ public class UploadService {
   }
 
   public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
+    if (file.isEmpty()) { // kiểm tra file có rỗng không, nếu rỗng thì return "" ==> ko lưu file
+      return "";
+    }
+
     String rootPath = this.servletContext.getRealPath("/resources/images"); // lấy ra đường dẫn absolute
     // path của path
     // vòng try catch để set up lưu trữ file trên server

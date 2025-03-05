@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 // annotation để biến model thành table(entity, model) trong database
@@ -25,15 +26,15 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY) // tự sinh id (Auto, Table, Sequence, indentity)
   private long id;
 
-  @NotNull
-  @Email
+  @Email(message = "Email is not valid", regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
+  // @NotEmpty(message = "Email is not empty")
   private String email;
 
-  @NotNull
-  @Min(6)
+  // @Min(value = 6, message = "Password must be at least 6 characters")
+  @NotEmpty(message = "Password is not empty")
   private String password;
 
-  @NotNull
+  @NotEmpty(message = "Full name is not empty")
   private String fullName;
 
   private String address;
