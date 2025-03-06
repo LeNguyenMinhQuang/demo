@@ -27,15 +27,16 @@
               <div class="card" style="width: 60%">
                 <div class="card-header">Product information</div>
                 <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Image:
+                    <img style="width: 300px" src="/images/avatar/${user.avatar}" alt="">
+                  </li>
                   <li class="list-group-item">Id: ${user.id}</li>
                   <li class="list-group-item">Name: ${user.fullName}</li>
                   <li class="list-group-item">Email: ${user.email}</li>
                   <li class="list-group-item">Address: ${user.address}</li>
                   <li class="list-group-item">Role: ${user.role.name}</li>
 
-                  <li class="list-group-item">Image:
-                    <img style="width: 100px" src="/images/avatar/${user.avatar}" alt="">
-                  </li>
+
                 </ul>
               </div>
             </div>

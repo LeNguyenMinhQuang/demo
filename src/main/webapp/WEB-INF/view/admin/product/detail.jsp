@@ -27,6 +27,9 @@
               <div class="card" style="width: 60%">
                 <div class="card-header">Product information</div>
                 <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Image:
+                    <img style="width: 300px;" src="/images/products/${product.image}" alt="">
+                  </li>
                   <li class="list-group-item">Id: ${product.id}</li>
                   <li class="list-group-item">Name: ${product.name}</li>
                   <li class="list-group-item">Price: ${product.price}</li>
@@ -36,9 +39,7 @@
                   <li class="list-group-item">Short description: ${product.shortDesc}</li>
                   <li class="list-group-item">Target: ${product.target}</li>
                   <li class="list-group-item">Sold: ${product.sold}</li>
-                  <li class="list-group-item">Image:
-                    <img style="width: 100px;" src="/images/products/${product.image}" alt="">
-                  </li>
+
                 </ul>
               </div>
             </div>
