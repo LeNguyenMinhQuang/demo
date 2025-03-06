@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.Quang.demo.domain.User;
+import com.Quang.demo.domain.dto.RegisterDTO;
 import com.Quang.demo.repository.UserRepositoty;
 
 @Service
@@ -41,6 +42,15 @@ public class UserService {
 
   public void handleDeleteUser(long id) {
     this.userRepositoty.deleteById(id);
+  }
+
+  // mapper để convert data từ DTO sang Entity
+  public User handleRegisterDTOtoUser(RegisterDTO registerDTO) {
+    User user = new User();
+    user.setEmail(registerDTO.getEmail());
+    user.setFullName(registerDTO.getFirstName() + " " + registerDTO.getLastName());
+    user.setPassword(registerDTO.getPassword());
+    return user;
   }
 
 }
