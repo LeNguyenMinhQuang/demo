@@ -77,7 +77,7 @@ public class UserController {
   // modelAttribute: lấy newUser từ form trong view
   // requestParam: lấy input name: avatarFileUpload trong view
   // Valid, BindingResult: kiểm tra dữ liệu nhập vào, phải để BindingResult sau
-  // Valid
+  // Valid, bindingResult: trả lỗi qua view
   public String createUser(Model model,
       @ModelAttribute("newUser") @Valid User newUser,
       BindingResult newUserBindingResult,

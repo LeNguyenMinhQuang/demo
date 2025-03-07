@@ -44,6 +44,12 @@ public class UserService {
     this.userRepositoty.deleteById(id);
   }
 
+  // hàm để check email đã tồn tại chưa ( để register)
+  public boolean handleCheckEmailExist(String email) {
+    List<User> users = this.userRepositoty.findAllByEmail(email);
+    return users.size() > 0;
+  }
+
   // mapper để convert data từ DTO sang Entity
   public User handleRegisterDTOtoUser(RegisterDTO registerDTO) {
     User user = new User();

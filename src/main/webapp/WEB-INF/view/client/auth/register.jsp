@@ -47,27 +47,36 @@
                               </div>
                             </div>
                             <div class="form-floating mb-3">
-                              <form:input class="form-control" path="email" type="email"
-                                placeholder="name@example.com" />
+                              <c:set var="errorEmail">
+                                <form:errors path="email" cssClass="invalid-feedback" />
+                              </c:set>
+                              <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                path="email" placeholder="name@example.com" />
+                              ${errorEmail}
                               <label for="inputEmail">Email address</label>
                             </div>
                             <div class="row mb-3">
                               <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                  <form:input class="form-control" path="password" type="password"
-                                    placeholder="Create a password" />
+                                  <c:set var="errorPassword">
+                                    <form:errors path="password" cssClass="invalid-feedback" />
+                                  </c:set>
+                                  <form:input type="password"
+                                    class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" path="password"
+                                    placeholder="Create a passwordm" />
+                                  ${errorPassword}
                                   <label for="inputPassword">Password</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                  <c:set var="errorPassword">
+                                  <c:set var="errorCPassword">
                                     <form:errors path="confirmPassword" cssClass="invalid-feedback" />
                                   </c:set>
                                   <form:input type="password"
                                     class="form-control ${not empty errorPassword ? 'is-invalid' : ''}"
                                     path="confirmPassword" />
-                                  ${errorPassword}
+                                  ${errorCPassword}
                                   <label for="inputPasswordConfirm">Confirm Password</label>
                                 </div>
                               </div>
