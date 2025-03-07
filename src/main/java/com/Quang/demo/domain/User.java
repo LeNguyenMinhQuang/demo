@@ -2,6 +2,8 @@ package com.Quang.demo.domain;
 
 import java.util.List;
 
+import com.Quang.demo.service.validator.StrongPassword;
+
 // import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class User {
 
   // @Min(value = 6, message = "Password must be at least 6 characters")
   @NotEmpty(message = "Password is not empty")
+  @StrongPassword // custom annotation
   private String password;
 
   @NotEmpty(message = "Full name is not empty")
