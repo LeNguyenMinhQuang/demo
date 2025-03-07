@@ -1,8 +1,14 @@
 package com.Quang.demo.controller.client;
 
+import java.util.List;
+
+import javax.naming.Binding;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -10,6 +16,8 @@ import com.Quang.demo.domain.User;
 import com.Quang.demo.domain.dto.RegisterDTO;
 import com.Quang.demo.service.RoleService;
 import com.Quang.demo.service.UserService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -35,7 +43,16 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public String postMethodName(Model model, @ModelAttribute("registerUser") RegisterDTO registerUser) {
+  public String registerUser(Model model, @ModelAttribute("registerUser") @Valid RegisterDTO registerUser,
+      BindingResult bindingResult) {
+    List<FieldError> errors = bindingResult.getFieldErrors();
+    for (FieldError error : errors) {
+      System.out.println(">>>>" + error.getDefaultMessage());
+      // model.addAttribute(error.getField(), error.getDefaultMessage());
+    }
+    if (bindingResult.hasErrors()) {
+      return "client/auth/register";
+    }
     User user = this.userService.handleRegisterDTOtoUser(registerUser);
     user.setPassword(this.passwordEncoder.encode(registerUser.getPassword()));
     user.setRole(this.roleService.handleGetRole("USER"));

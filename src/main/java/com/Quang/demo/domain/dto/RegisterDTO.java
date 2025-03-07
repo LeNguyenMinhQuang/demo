@@ -1,5 +1,8 @@
 package com.Quang.demo.domain.dto;
 
+import com.Quang.demo.service.validator.RegisterChecked;
+
+@RegisterChecked
 public class RegisterDTO {
   private String firstName, lastName, email, password, confirmPassword;
 
