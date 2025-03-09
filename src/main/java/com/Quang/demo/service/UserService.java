@@ -50,6 +50,11 @@ public class UserService {
     return users.size() > 0;
   }
 
+  public User handleFindUserByEmail(String email) {
+    User user = this.userRepositoty.findFirstByEmail(email);
+    return user;
+  }
+
   // mapper để convert data từ DTO sang Entity
   public User handleRegisterDTOtoUser(RegisterDTO registerDTO) {
     User user = new User();

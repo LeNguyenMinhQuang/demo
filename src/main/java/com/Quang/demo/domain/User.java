@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 // annotation để biến model thành table(entity, model) trong database
 @Entity
@@ -34,7 +33,7 @@ public class User {
 
   // @Min(value = 6, message = "Password must be at least 6 characters")
   @NotEmpty(message = "Password is not empty")
-  @StrongPassword // custom annotation
+  // @StrongPassword // custom annotation
   private String password;
 
   @NotEmpty(message = "Full name is not empty")

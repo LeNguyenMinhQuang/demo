@@ -35,12 +35,15 @@ public class RegisterValidator implements ConstraintValidator<RegisterChecked, R
           .addConstraintViolation().disableDefaultConstraintViolation();
     }
 
-    if (!user.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")) {
-      valid = false;
-      context.buildConstraintViolationWithTemplate(
-          "Password has to contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character")
-          .addPropertyNode("password").addConstraintViolation().disableDefaultConstraintViolation();
-    }
+    // if
+    // (!user.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))
+    // {
+    // valid = false;
+    // context.buildConstraintViolationWithTemplate(
+    // "Password has to contain at least 8 characters, 1 uppercase, 1 lowercase, 1
+    // number and 1 special character")
+    // .addPropertyNode("password").addConstraintViolation().disableDefaultConstraintViolation();
+    // }
     return valid;
 
   }
