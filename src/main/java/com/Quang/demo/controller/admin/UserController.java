@@ -45,7 +45,7 @@ public class UserController {
   public String viewUser(Model model) {
     List<User> arrUsers = this.userService.handleGetAllUser();
     model.addAttribute("userList", arrUsers);
-    return "/admin/user/show";
+    return "admin/user/show";
   }
 
   @GetMapping("/admin/user/{id}")
@@ -53,7 +53,7 @@ public class UserController {
   public String getAllUsers(Model model, @PathVariable long id) {
     User user = this.userService.handleGetUserById(id);
     model.addAttribute("user", user);
-    return "/admin/user/detail";
+    return "admin/user/detail";
   }
 
   @GetMapping("/test")
@@ -62,14 +62,14 @@ public class UserController {
     User user = this.userService.handleGetUserByEmail("quang@quang.com");
     System.out.println("list: " + arrUsers);
     System.out.println("one: " + user);
-    return "/client/hello";
+    return "client/hello";
   }
 
   @GetMapping("/admin/user/create")
   public String getUserCreatePage(Model model) {
     model.addAttribute("newUser", new User());
     // newUser trên sẽ liên kết vs modelAttribute trong trang view
-    return "/admin/user/create";
+    return "admin/user/create";
   }
 
   @PostMapping("/admin/user/create")
@@ -89,7 +89,7 @@ public class UserController {
     }
 
     if (newUserBindingResult.hasErrors()) { // nếu có lỗi thì trả về trang create
-      return "/admin/user/create";
+      return "admin/user/create";
     }
 
     // avatar
@@ -116,7 +116,7 @@ public class UserController {
   public String getUserUpdatePage(Model model, @PathVariable long id) {
     User user = this.userService.handleGetUserById(id);
     model.addAttribute("user", user);
-    return "/admin/user/update";
+    return "admin/user/update";
   }
 
   @PostMapping("/admin/user/update/")
@@ -145,7 +145,7 @@ public class UserController {
     User user = new User();
     user.setId(id);
     model.addAttribute("user", user);
-    return "/admin/user/delete";
+    return "admin/user/delete";
   }
 
   @PostMapping("/admin/user/delete")
