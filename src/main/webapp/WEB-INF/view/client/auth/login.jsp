@@ -28,23 +28,32 @@
                           <h3 class="text-center font-weight-light my-4">Login</h3>
                         </div>
                         <div class="card-body">
-                          <form:form action="/login" method="POST" modelAttribute="loginUser"
-                            enctype="multipart/form-data">
+                          <form:form action="/login" method="post">
+                            <c:if test="${param.error !=null}">
+                              <div class="my-2" style="color: red">Invalid email or password</div>
+                            </c:if>
                             <div class="form-floating mb-3">
-                              <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                              <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com"
+                                name="username" />
+                              <!-- khai báo name="username" và name="password" để cho spring security hoạt động -->
                               <label for="inputEmail">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                              <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                              <input class="form-control" id="inputPassword" type="password" placeholder="Password"
+                                name="password" />
                               <label for="inputPassword">Password</label>
+                            </div>
+                            <!-- và phải có thêm input sau cho Spring security -->
+                            <div>
+                              <input type="hidden" name="${_crsf.parameterName}" value="${_crsf.token}">
                             </div>
                             <div class="form-check mb-3">
                               <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
                               <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                              <a class="small" href="password.html">Forgot Password?</a>
-                              <a class="btn btn-primary" href="index.html">Login</a>
+                              <a class="small">Forgot Password?</a>
+                              <button class="btn btn-primary" type="submit">Login</button>
                             </div>
                           </form:form>
                         </div>
