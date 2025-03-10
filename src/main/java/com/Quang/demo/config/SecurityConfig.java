@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.Quang.demo.service.CustomUserDetailsService;
 import com.Quang.demo.service.UserService;
@@ -60,14 +61,19 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests(authorize -> authorize
             .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-            .requestMatchers("/", "/product/**", "/login", "/client/**", "/css/**", "/js/**", "/images/**").permitAll()
+            .requestMatchers("/", "/product/**", "/login", "/logout", "/client/**", "/css/**", "/js/**", "/images/**")
+            .permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())
         .formLogin(formLogin -> formLogin
             .loginPage("/login")
             .failureUrl("/login?error")
             .successHandler(customSuccessHandler())
-            .permitAll());
+            .permitAll())
+        .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
+    // http.logout(logout -> logout.logoutUrl("/logout").logoutRequestMatcher(new
+    // AntPathRequestMatcher("/logout", "POST"))
+    // .logoutSuccessUrl("/login?logout").permitAll());
 
     return http.build();
   }
