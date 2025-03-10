@@ -1,6 +1,5 @@
 package com.Quang.demo.service;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,8 +30,10 @@ public class CustomUserDetailsService implements UserDetailsService {
       throw new UsernameNotFoundException(username + " not Found!");
     }
 
+    String role = userInDatabase.getRole().getName();
+
     return new User(userInDatabase.getEmail(), userInDatabase.getPassword(),
-        Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role)));
 
   }
 
