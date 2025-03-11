@@ -5,12 +5,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.Quang.demo.domain.User;
+import com.Quang.demo.service.UserService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +24,9 @@ import jakarta.servlet.http.HttpSession;
 // xử lý log user vào home, admin vào admin
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
+  @Autowired
+  private UserService userService;
+
   protected String determineTargetUrl(final Authentication authentication) {
     Map<String, String> roleTargetUrlMap = new HashMap<>();
     roleTargetUrlMap.put("ROLE_USER", "/");
@@ -36,12 +43,22 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     throw new IllegalStateException();
   }
 
-  protected void clearAuthenticationAttributes(HttpServletRequest request) {
-    HttpSession session = request.getSession(false);
+  protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
+    HttpSession session = request.getSession(true); // custom session
     if (session == null) {
       return;
+    } else if (session != null) {
+      session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+      // get email
+      String email = authentication.getName();
+      // get user
+      User user = this.userService.handleFindUserByEmail(email);
+      if (user != null) {
+        session.setAttribute("fullName", user.getFullName());
+        session.setAttribute("avatar", user.getAvatar());
+      }
     }
-    session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+
   }
 
   private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -58,6 +75,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     redirectStrategy.sendRedirect(request, response, targetUrl);
+    clearAuthenticationAttributes(request, authentication);
   }
 
 }

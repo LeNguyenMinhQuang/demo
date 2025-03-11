@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.Quang.demo.domain.Product;
 import com.Quang.demo.service.ProductService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class HomePageController {
   // DI: nhúng ProductService vào HomePageController để lấy dữ liệu từ database
@@ -20,10 +23,11 @@ public class HomePageController {
     this.productService = productService;
   }
 
-  @GetMapping("")
-  public String getHomePage(Model model) {
+  @GetMapping("/")
+  public String getHomePage(Model model, HttpServletRequest request) {
     List<Product> products = this.productService.handleGetProducts();
     model.addAttribute("products", products);
+    HttpSession session = request.getSession(false); // lấy session từ request
     return "client/homepage/show";
   }
 
