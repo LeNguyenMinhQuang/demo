@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -55,6 +56,10 @@ public class User {
   // 1 order của 1 user, 1 user có nhiều order = > user 1 - many order
   @OneToMany(mappedBy = "user")
   private List<Order> orders;
+
+  // 1 user có 1 giỏ hàng
+  @OneToOne(mappedBy = "user")
+  private Cart cart;
 
   public User() {
   }
@@ -145,6 +150,14 @@ public class User {
   public String toString() {
     return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName + ", address="
         + address + ", phone=" + phone + ", avatar=" + avatar + "]";
+  }
+
+  public Cart getCart() {
+    return cart;
+  }
+
+  public void setCart(Cart cart) {
+    this.cart = cart;
   }
 
 }
