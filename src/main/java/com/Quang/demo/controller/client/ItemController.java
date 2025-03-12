@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ItemController {
@@ -27,9 +29,14 @@ public class ItemController {
 
     String email = (String) session.getAttribute("email"); // (String) : ép kiểu từ kiểu object mà getAttribute trả về
 
-    this.productService.handleAddProductToCart(email, productId);
+    this.productService.handleAddProductToCart(email, productId, session);
 
     return "redirect:/";
+  }
+
+  @GetMapping("/cart")
+  public String getCart() {
+    return "client/cart/show";
   }
 
 }

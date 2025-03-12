@@ -13,6 +13,8 @@ import com.Quang.demo.repository.CartDetailRepository;
 import com.Quang.demo.repository.CartRepository;
 import com.Quang.demo.repository.ProductRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class ProductService {
 
@@ -49,7 +51,7 @@ public class ProductService {
     this.productRepository.deleteById(id);
   }
 
-  public void handleAddProductToCart(String email, long productId) {
+  public void handleAddProductToCart(String email, long productId, HttpSession session) {
     User user = this.userService.handleGetUserByEmail(email);
     if (user != null) {
       // tìm cart của user
@@ -58,7 +60,7 @@ public class ProductService {
       if (cart == null) {
         Cart newCart = new Cart();
         newCart.setUser(user);
-        newCart.setSum(1);
+        newCart.setSum(0);
 
         cart = this.cartRepository.save(newCart);
       }
@@ -70,13 +72,37 @@ public class ProductService {
       if (optionalProduct.isPresent()) {
         Product product = optionalProduct.get();
 
-        CartDetail cd = new CartDetail();
-        cd.setCart(cart);
-        cd.setProduct(product);
-        cd.setPrice(product.getPrice());
-        cd.setQuantity(1);
+        // check xem giỏ hàng đã có product đó chưa
+        boolean isExistProductInCart = this.cartDetailRepository.existsByCartAndProduct(cart, product);
+        int quantity;
+        if (isExistProductInCart) {
+          // nếu có rồi thì quantity +1
+          CartDetail cd = this.cartDetailRepository.findByCartAndProduct(cart, product);
+          quantity = (int) cd.getQuantity() + 1;
+          cd.setQuantity(quantity);
+          // cd.setPrice((int) product.getPrice() * quantity);
+          this.cartDetailRepository.save(cd);
 
-        this.cartDetailRepository.save(cd);
+        } else {
+          // chưa có thì tạo mới cart detail
+          quantity = 1;
+
+          CartDetail cd = new CartDetail();
+          cd.setCart(cart);
+          cd.setProduct(product);
+          cd.setPrice(product.getPrice());
+          cd.setQuantity(quantity);
+
+          this.cartDetailRepository.save(cd);
+
+          // khi thêm 1 sp mới vào cart thì sum tăng lên 1 và update session để hiện thị
+          // trên navbar
+          int s = cart.getSum() + 1;
+          cart.setSum(s);
+          this.cartRepository.save(cart);
+          session.setAttribute("sumCart", s);
+        }
+
       }
 
     }
