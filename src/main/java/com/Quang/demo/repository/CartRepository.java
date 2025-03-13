@@ -8,8 +8,11 @@ import com.Quang.demo.domain.User;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
-  Cart findByUser(User user);
+  Cart findByUser(User user); // ko cần hàm find by userID vì truyền user vào nó cũng dò theo Id, do 2 bảng
+                              // cart và user đã join với nhau
 
   Cart save(Cart cart);
+
+  void deleteById(long cartId);
 
 }

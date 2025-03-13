@@ -108,4 +108,26 @@ public class ProductService {
     }
 
   }
+
+  public Cart handleGetCartByUser(User user) {
+    Cart c = this.cartRepository.findByUser(user);
+    return c;
+  }
+
+  public CartDetail handleGetCartDetailById(long id) {
+    return this.cartDetailRepository.findById(id);
+  }
+
+  public void handleDeleteCartDetailById(long id) {
+    this.cartDetailRepository.deleteById(id);
+  }
+
+  public void handleDeleteCart(long cartId) {
+    this.cartRepository.deleteById(cartId);
+  }
+
+  public void handleSaveCart(Cart cart) {
+    this.cartRepository.save(cart);
+  }
+
 }
