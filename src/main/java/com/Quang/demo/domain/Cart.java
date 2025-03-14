@@ -2,6 +2,7 @@ package com.Quang.demo.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +31,8 @@ public class Cart {
   // card_detail_id: 1 giỏ hàng chứa nhiều chi tiết giỏ hàng (1 chi tiết giỏ hàng
   // = 1 sản phẩm trong giỏ hàng)
   @OneToMany(mappedBy = "cart")
+  // @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE, orphanRemoval =
+  // true)
   List<CartDetail> cartDetails;
 
   public long getId() {

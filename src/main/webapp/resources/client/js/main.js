@@ -163,6 +163,11 @@
     var input = button.parent().parent().find("input");
     input.val(newVal);
 
+    //update in checkout form
+    const checkoutindex = input.attr("data-cart-detail-index");
+    const el = document.getElementById(`cartDetails${checkoutindex}.quantity`);
+    $(el).val(newVal);
+
     //get price
     const price = input.attr("data-cart-detail-price");
     const id = input.attr("data-cart-detail-id");

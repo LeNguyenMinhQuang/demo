@@ -76,7 +76,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <c:forEach var="cartDetail" items="${lists}">
+                          <c:forEach var="cartDetail" items="${lists}" varStatus="status">
                             <tr>
                               <th scope="row">
                                 <div class="d-flex align-items-center">
@@ -104,7 +104,8 @@
                                   </div>
                                   <input type="text" class="form-control form-control-sm text-center border-0"
                                     value="${cartDetail.quantity}" data-cart-detail-id="${cartDetail.id}"
-                                    data-cart-detail-price="${cartDetail.price}">
+                                    data-cart-detail-price="${cartDetail.price}"
+                                    data-cart-detail-index="${status.index}">
                                   <div class="input-group-btn">
                                     <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                       <i class="fa fa-plus"></i>
@@ -160,10 +161,30 @@
                               <fmt:formatNumber type="number" value="${total}" />
                             </p>
                           </div>
-                          <button
-                            class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                            type="button">Proceed Checkout</button>
+                          <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
+                            <input type="hidden" name="${_crsf.parameterName}" value="${_crsf.token}">
+                            <div style="display: none;">
+                              <c:forEach var="cartDetail" items="${lists}" varStatus="status">
+                                <div class="mb-3">
+                                  <div class="form-group">
+                                    <label>Id:</label>
+                                    <form:input class="form-control" type="text" value="${cartDetail.id}"
+                                      path="cartDetails[${status.index}].id" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label>Quantity:</label>
+                                    <form:input class="form-control" type="text" value="${cartDetail.quantity}"
+                                      path="cartDetails[${status.index}].quantity" />
+                                  </div>
+                                </div>
+                              </c:forEach>
+                            </div>
+                            <button
+                              class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+                              type="submit">Proceed Checkout</button>
                         </div>
+                        </form:form>
+
                       </div>
                     </div>
                   </div>

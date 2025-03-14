@@ -7,13 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.Quang.demo.domain.Cart;
 import com.Quang.demo.domain.CartDetail;
+import com.Quang.demo.domain.Order;
+import com.Quang.demo.domain.OrderDetail;
 import com.Quang.demo.domain.Product;
 import com.Quang.demo.domain.User;
 import com.Quang.demo.repository.CartDetailRepository;
 import com.Quang.demo.repository.CartRepository;
+import com.Quang.demo.repository.OrderDetailRepository;
+import com.Quang.demo.repository.OrderRepository;
 import com.Quang.demo.repository.ProductRepository;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductService {
@@ -22,13 +27,18 @@ public class ProductService {
   private final CartRepository cartRepository;
   private final CartDetailRepository cartDetailRepository;
   private final UserService userService;
+  private final OrderRepository orderRepository;
+  private final OrderDetailRepository orderDetailRepository;
 
   public ProductService(ProductRepository productRepository, CartRepository cartRepository,
-      CartDetailRepository cartDetailRepository, UserService userService) {
+      CartDetailRepository cartDetailRepository, UserService userService, OrderRepository orderRepository,
+      OrderDetailRepository orderDetailRepository) {
     this.productRepository = productRepository;
     this.cartRepository = cartRepository;
     this.cartDetailRepository = cartDetailRepository;
     this.userService = userService;
+    this.orderRepository = orderRepository;
+    this.orderDetailRepository = orderDetailRepository;
   }
 
   public Product handleSaveProduct(Product newProduct) {
@@ -128,6 +138,65 @@ public class ProductService {
 
   public void handleSaveCart(Cart cart) {
     this.cartRepository.save(cart);
+  }
+
+  public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
+    for (CartDetail cartDetail : cartDetails) {
+      Optional<CartDetail> cdOptional = Optional.ofNullable(this.cartDetailRepository.findById(cartDetail.getId()));
+      if (cdOptional.isPresent()) {
+        CartDetail updateCartDetail = cdOptional.get(); // hàm get để lấy value bên trong biến optinal
+        updateCartDetail.setQuantity(cartDetail.getQuantity());
+        this.cartDetailRepository.save(updateCartDetail);
+      }
+    }
+  }
+
+  public void handlePlaceOrder(User user, HttpSession session, String receiverName, String receiverPhone,
+      String receiverAddress) {
+    // create order
+    Order order = new Order();
+    order.setUser(user);
+    order.setReceiverName(receiverName);
+    order.setReceiverPhone(receiverPhone);
+    order.setReceiverAddress(receiverAddress);
+
+    order = this.orderRepository.save(order);
+
+    // create orderDetail
+    // b1: get cart by user
+    Cart cart = this.handleGetCartByUser(user);
+    if (cart != null) {
+      List<CartDetail> cds = cart.getCartDetails();
+      if (cds != null) {
+        for (CartDetail cd : cds) {
+          OrderDetail od = new OrderDetail();
+          od.setPrice(cd.getPrice());
+          od.setQuantity(cd.getQuantity());
+          od.setOrder(order);
+          od.setProduct(cd.getProduct());
+          this.orderDetailRepository.save(od);
+        }
+      }
+
+      // b2: delete cart detail and cart
+
+      for (CartDetail cd : cds) {
+        this.cartDetailRepository.deleteById(cd.getId());
+      }
+
+      cart.setSum(0);
+      cart.getCartDetails().clear();
+      this.cartRepository.save(cart);
+
+      // bằng 1 thế lực wibu nào đó mà đ thể nào xóa được cart nên đổi sum thành 0 (có
+      // thể là do liên kết vs user, idk nhg mà kệ sau pro tính tiếp)
+      // this.cartRepository.deleteById(cart.getId());
+
+      // b3: update session
+      session.setAttribute("sumCart", 0);
+
+    }
+
   }
 
 }

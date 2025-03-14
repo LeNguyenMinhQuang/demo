@@ -18,7 +18,7 @@ public class OrderDetail {
   private long id;
 
   private long quantity;
-  private long price;
+  private double price;
 
   // 1 detail chỉ thuộc về 1 order, nhg 1 order có thể có nhiều detail -> many to
   // one
@@ -48,12 +48,28 @@ public class OrderDetail {
     this.quantity = quantity;
   }
 
-  public long getPrice() {
+  public double getPrice() {
     return price;
   }
 
-  public void setPrice(long price) {
+  public void setPrice(double price) {
     this.price = price;
+  }
+
+  public Order getOrder() {
+    return order;
+  }
+
+  public void setOrder(Order order) {
+    this.order = order;
+  }
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
   @Override
