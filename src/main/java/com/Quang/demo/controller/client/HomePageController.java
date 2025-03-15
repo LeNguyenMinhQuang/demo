@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.Quang.demo.domain.Order;
 import com.Quang.demo.domain.Product;
+import com.Quang.demo.domain.User;
 import com.Quang.demo.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +46,16 @@ public class HomePageController {
   @GetMapping("/access-deny")
   public String getDenyPage(Model model) {
     return "client/deny";
+  }
+
+  @GetMapping("/order-history")
+  public String getOrderHistory(Model model, HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    User user = new User();
+    user.setId((long) session.getAttribute("id"));
+    List<Order> orders = this.productService.handleGetOrderByUser(user);
+    model.addAttribute("orders", orders);
+    return "client/cart/orderHistory";
   }
 
 }

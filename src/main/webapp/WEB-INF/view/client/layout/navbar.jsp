@@ -53,8 +53,10 @@
                       <c:out value="${sessionScope.fullName}" />
                     </div>
                   </li>
-                  <li><a class="dropdown-item" href="#">Account</a></li>
-                  <li><a class="dropdown-item" href="#">History</a></li>
+                  <c:if test="${sessionScope.role == 'ADMIN'}">
+                    <li><a class=" dropdown-item" href="/admin">Admin</a></li>
+                  </c:if>
+                  <li><a class=" dropdown-item" href="/order-history">History</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>

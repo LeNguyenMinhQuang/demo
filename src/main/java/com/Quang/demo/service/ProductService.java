@@ -52,6 +52,11 @@ public class ProductService {
 
   }
 
+  public List<Order> handleGetOrders() {
+    List<Order> orders = this.orderRepository.findAll();
+    return orders;
+  }
+
   public Product handleGetByID(long id) {
     Product product = this.productRepository.findById(id);
     return product;
@@ -159,15 +164,24 @@ public class ProductService {
     order.setReceiverName(receiverName);
     order.setReceiverPhone(receiverPhone);
     order.setReceiverAddress(receiverAddress);
-
-    order = this.orderRepository.save(order);
+    order.setStatus("Pending");
 
     // create orderDetail
     // b1: get cart by user
     Cart cart = this.handleGetCartByUser(user);
+    double total = 0;
     if (cart != null) {
       List<CartDetail> cds = cart.getCartDetails();
+
+      for (CartDetail cd : cds) {
+        total += cd.getPrice();// tính total price rồi tạo order
+      }
+
+      order.setTotalPrice(total);
+      order = this.orderRepository.save(order);
+
       if (cds != null) {
+
         for (CartDetail cd : cds) {
           OrderDetail od = new OrderDetail();
           od.setPrice(cd.getPrice());
@@ -175,7 +189,9 @@ public class ProductService {
           od.setOrder(order);
           od.setProduct(cd.getProduct());
           this.orderDetailRepository.save(od);
+
         }
+
       }
 
       // b2: delete cart detail and cart
@@ -197,6 +213,33 @@ public class ProductService {
 
     }
 
+  }
+
+  public List<Order> handlegetAllOrders() {
+    return this.orderRepository.findAll();
+  }
+
+  public Order handleGetOrderById(long id) {
+    return this.orderRepository.findById(id);
+  }
+
+  public List<OrderDetail> handleGetOrderDetailsbyOrder(Order order) {
+    return this.orderDetailRepository.findByOrder(order);
+  }
+
+  public void handleDeleteOrder(long id) {
+    Order order = this.orderRepository.findById(id);
+    List<OrderDetail> list = this.orderDetailRepository.findByOrder(order);
+    if (list != null) {
+      for (OrderDetail od : list) {
+        this.orderDetailRepository.deleteById(od.getId());
+      }
+    }
+    this.orderRepository.deleteById(id);
+  }
+
+  public List<Order> handleGetOrderByUser(User user) {
+    return this.orderRepository.findByUser(user);
   }
 
 }

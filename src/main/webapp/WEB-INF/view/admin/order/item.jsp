@@ -38,26 +38,26 @@
                       <table class="table table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Action</th>
+
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <!-- <th>Action</th> -->
                           </tr>
                         </thead>
                         <tbody>
-                          <c:forEach var="order" items="${orders}">
+                          <c:forEach var="item" items="${list}">
                             <!-- forEach var items -->
                             <tr>
-                              <th>${order.id}</th>
-                              <th>${order.user.id}. ${order.user.fullName} - ${order.user.role.name}</th>
-                              <th>${order.totalPrice}</th>
-                              <th>${order.status}</th>
-                              <th>
+
+                              <th>${item.product.factory} ${item.product.name}</th>
+                              <th>${item.quantity}</th>
+                              <th>${item.price}</th>
+                              <!-- <th>
                                 <a href="/admin/order/${order.id}" class="btn btn-success">View</a>
                                 <a href="/admin/order/update/${order.id}" class="btn btn-warning">Update</a>
                                 <a href="/admin/order/delete/${order.id}" class="btn btn-danger">Delete</a>
-                              </th>
+                              </th> -->
                             </tr>
                           </c:forEach>
                         </tbody>

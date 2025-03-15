@@ -19,11 +19,19 @@
         aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="#!">Settings</a></li>
-        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+        <li><a class="dropdown-item" href="/">Home Page</a></li>
         <li>
           <hr class="dropdown-divider" />
         </li>
-        <li><a class="dropdown-item" href="#!">Logout</a></li>
+        <li>
+          <div class="dropdown-item">
+            <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+              <form:form method="post" action="/logout">
+                <!-- <input type="hidden" name="${_crsf.parameterName}" value="${_crsf.token}"> -->
+                <button type="submit" class="dropdown-item">Logout</button>
+              </form:form>
+          </div>
+        </li>
       </ul>
     </li>
   </ul>

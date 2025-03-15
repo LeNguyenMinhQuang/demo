@@ -92,9 +92,6 @@ public class SecurityConfig {
             .successHandler(customSuccessHandler())
             .permitAll())
         .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
-    // http.logout(logout -> logout.logoutUrl("/logout").logoutRequestMatcher(new
-    // AntPathRequestMatcher("/logout", "POST"))
-    // .logoutSuccessUrl("/login?logout").permitAll());
 
     return http.build();
   }
