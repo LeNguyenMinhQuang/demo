@@ -1,6 +1,7 @@
 package com.Quang.demo.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,7 +37,16 @@ public class ProductController {
   // @RequestParam: 1. lấy queryString 2. lấy data của input theo name của input
   // trong form gửi lên
   @GetMapping("/admin/product")
-  public String getProducts(Model model, @RequestParam("page") int page) {
+  public String getProducts(Model model, @RequestParam("page") Optional<String> pageOptional) {
+
+    int page = 1;
+    try {
+      if (pageOptional.isPresent()) {
+        page = Integer.parseInt(pageOptional.get());
+      }
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
 
     // tính số trang
     // long totalPrd = this.productService.handleCountAllProducts();
