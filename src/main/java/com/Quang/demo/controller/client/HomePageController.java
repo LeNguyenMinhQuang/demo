@@ -2,6 +2,9 @@ package com.Quang.demo.controller.client;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +28,15 @@ public class HomePageController {
     this.productService = productService;
   }
 
+  // Vì bên admin có pagination nên bên homepage sẽ xuất hiện bug do dùng chung
+  // hàm handleGetProducts nên phải sửa pageable thành số trang cần (10 item)
   @GetMapping("/")
   public String getHomePage(Model model, HttpServletRequest request) {
-    List<Product> products = this.productService.handleGetProducts();
+    Pageable pageable = PageRequest.of(0, 8);
+    Page<Product> prds = this.productService.handleGetProducts(pageable);
+    List<Product> products = prds.getContent();
     model.addAttribute("products", products);
-    HttpSession session = request.getSession(false); // lấy session từ request
+    // HttpSession session = request.getSession(false); // lấy session từ request
     return "client/homepage/show";
   }
 
@@ -37,7 +44,9 @@ public class HomePageController {
   public String getDetail(Model model, @PathVariable long id) {
     Product product = this.productService.handleGetByID(id);
     model.addAttribute("product", product);
-    List<Product> products = this.productService.handleGetProducts();
+    Pageable pageable = PageRequest.of(0, 8);
+    Page<Product> prds = this.productService.handleGetProducts(pageable);
+    List<Product> products = prds.getContent();
     model.addAttribute("products", products);
 
     return "client/homepage/detail";

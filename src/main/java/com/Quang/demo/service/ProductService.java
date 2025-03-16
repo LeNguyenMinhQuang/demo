@@ -3,6 +3,8 @@ package com.Quang.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.Quang.demo.domain.Cart;
@@ -46,10 +48,19 @@ public class ProductService {
     return product;
   }
 
-  public List<Product> handleGetProducts() {
-    List<Product> products = this.productRepository.findAll();
-    return products;
+  // public List<Product> handleGetProducts() {
+  // List<Product> products = this.productRepository.findAll();
+  // return products;
 
+  // }
+
+  public Page<Product> handleGetProducts(Pageable pageable) {
+    Page<Product> products = this.productRepository.findAll(pageable);
+    return products;
+  }
+
+  public long handleCountAllProducts() {
+    return this.productRepository.count();
   }
 
   public List<Order> handleGetOrders() {

@@ -25,11 +25,11 @@ public class DashboardController {
   @GetMapping("/admin")
   public String getDashboard(Model model) {
     List<User> users = this.userService.handleGetAllUser();
-    List<Product> products = this.productService.handleGetProducts();
+    long productsSize = this.productService.handleCountAllProducts();
     List<Order> orders = this.productService.handleGetOrders();
 
     model.addAttribute("totalUser", users.size());
-    model.addAttribute("totalProduct", products.size());
+    model.addAttribute("totalProduct", productsSize);
     model.addAttribute("totalOrder", orders.size());
 
     return "admin/dashboard/show";

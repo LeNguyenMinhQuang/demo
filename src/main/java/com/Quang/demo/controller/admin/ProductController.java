@@ -2,6 +2,9 @@ package com.Quang.demo.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,10 +33,23 @@ public class ProductController {
     this.uploadService = uploadService;
   }
 
+  // @RequestParam: 1. lấy queryString 2. lấy data của input theo name của input
+  // trong form gửi lên
   @GetMapping("/admin/product")
-  public String getProducts(Model model) {
-    List<Product> products = this.productService.handleGetProducts();
+  public String getProducts(Model model, @RequestParam("page") int page) {
+
+    // tính số trang
+    // long totalPrd = this.productService.handleCountAllProducts();
+    // long pages = totalPrd / 5;
+
+    Pageable pageable = PageRequest.of(page - 1, 5);
+    Page<Product> prds = this.productService.handleGetProducts(pageable);
+    long pages = prds.getTotalPages();
+
+    List<Product> products = prds.getContent(); // convert từ Page sang List để view có thể forEach được
     model.addAttribute("productsList", products);
+    model.addAttribute("currentPage", page);
+    model.addAttribute("pages", pages);
     return "admin/product/show";
   }
 

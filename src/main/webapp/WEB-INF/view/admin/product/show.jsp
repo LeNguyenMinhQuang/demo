@@ -64,6 +64,29 @@
                           </c:forEach>
                         </tbody>
                       </table>
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                          <li class="page-item">
+                            <a class="${(currentPage eq 1) ? 'disabled page-link' : 'page-link'}"
+                              href="/admin/product?page=${currentPage - 1}" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                          </li>
+                          <!-- phần sau dấu ? là queryString, nó sẽ ko ảnh hưởng tới đường link url gọi bên server -->
+                          <c:forEach begin="1" end="${pages}" varStatus="status">
+                            <li class="page-item"><a
+                                class="${(status.index) eq currentPage ? 'active page-link' : 'page-link'}"
+                                href="/admin/product?page=${status.index}">${status.index}</a></li>
+                          </c:forEach>
+
+                          <li class="page-item">
+                            <a class="${(currentPage eq pages) ? 'disabled page-link' : 'page-link'}"
+                              href="/admin/product?page=${currentPage + 1}" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
                     </div>
                   </div>
                 </div>
