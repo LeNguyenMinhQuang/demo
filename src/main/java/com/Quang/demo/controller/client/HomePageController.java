@@ -91,7 +91,7 @@ public class HomePageController {
     }
 
     Pageable pageable = PageRequest.of(page - 1, 6);
-    Page<Product> prds = this.productService.handleGetProducts(pageable, name);
+    Page<Product> prds = this.productService.handleGetProductsWithSpec(pageable, name);
     long pages = prds.getTotalPages();
     List<Product> products = prds.getContent();
     model.addAttribute("products", products);

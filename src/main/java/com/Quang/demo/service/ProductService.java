@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.stereotype.Service;
 
 import com.Quang.demo.domain.Cart;
@@ -13,16 +13,16 @@ import com.Quang.demo.domain.CartDetail;
 import com.Quang.demo.domain.Order;
 import com.Quang.demo.domain.OrderDetail;
 import com.Quang.demo.domain.Product;
-import com.Quang.demo.domain.Product_;
+
 import com.Quang.demo.domain.User;
 import com.Quang.demo.repository.CartDetailRepository;
 import com.Quang.demo.repository.CartRepository;
 import com.Quang.demo.repository.OrderDetailRepository;
 import com.Quang.demo.repository.OrderRepository;
 import com.Quang.demo.repository.ProductRepository;
+import com.Quang.demo.service.specification.ProductSpec;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 
 @Service
 public class ProductService {
@@ -62,11 +62,8 @@ public class ProductService {
   // select, join, group by, order by, etc. (ít dùng)
   // CriteriaBuilder: sử dụng predicates, để build ra điều kiện của câu query
   // Predicate trả về true hoặc false
-  private Specification<Product> nameLike(String name) {
-    return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
-  }
 
-  // tính đa hình của OOP
+  // tính đa hình của OOP (2 class cùng tên nhg khác biến truyền vào)
 
   public Page<Product> handleGetProducts(Pageable pageable) {
     Page<Product> products = this.productRepository.findAll(pageable);
@@ -74,7 +71,12 @@ public class ProductService {
   }
 
   public Page<Product> handleGetProducts(Pageable pageable, String name) {
-    Page<Product> products = this.productRepository.findAll(this.nameLike(name), pageable);
+    Page<Product> products = this.productRepository.findAll(ProductSpec.nameLike(name), pageable);
+    return products;
+  }
+
+  public Page<Product> handleGetProductsWithSpec(Pageable pageable, String name) {
+    Page<Product> products = this.productRepository.findAll(ProductSpec.nameLike(name), pageable);
     return products;
   }
 
