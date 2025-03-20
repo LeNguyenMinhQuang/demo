@@ -25,7 +25,7 @@
       <div class="collapse navbar-collapse bg-white justify-content-between mx-5" id="navbarCollapse">
         <div class="navbar-nav">
           <a href="/" class="nav-item nav-link active">Home</a>
-          <a href="shop.html" class="nav-item nav-link">Shop</a>
+          <a href="/shop" class="nav-item nav-link">Shop</a>
         </div>
         <!-- nếu có ng dùng đã đăng nhập mới hiện 2 cái dưới -->
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

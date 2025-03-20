@@ -1,6 +1,7 @@
 package com.Quang.demo.controller.client;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,7 @@ import com.Quang.demo.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomePageController {
@@ -65,6 +67,26 @@ public class HomePageController {
     List<Order> orders = this.productService.handleGetOrderByUser(user);
     model.addAttribute("orders", orders);
     return "client/cart/orderHistory";
+  }
+
+  @GetMapping("/shop")
+  public String getShopPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+    int page = 1;
+    try {
+      if (pageOptional.isPresent()) {
+        page = Integer.parseInt(pageOptional.get());
+      }
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+    Pageable pageable = PageRequest.of(page - 1, 6);
+    Page<Product> prds = this.productService.handleGetProducts(pageable);
+    long pages = prds.getTotalPages();
+    List<Product> products = prds.getContent();
+    model.addAttribute("products", products);
+    model.addAttribute("pages", pages);
+    model.addAttribute("page", page);
+    return "client/shop/show";
   }
 
 }
