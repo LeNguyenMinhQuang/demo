@@ -70,7 +70,8 @@ public class HomePageController {
   }
 
   @GetMapping("/shop")
-  public String getShopPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+  public String getShopPage(Model model, @RequestParam("page") Optional<String> pageOptional,
+      @RequestParam("name") Optional<String> nameOptional) {
     int page = 1;
     try {
       if (pageOptional.isPresent()) {
@@ -79,8 +80,18 @@ public class HomePageController {
     } catch (Exception e) {
       // TODO: handle exception
     }
+
+    String name = "";
+    try {
+      if (nameOptional.isPresent()) {
+        name = nameOptional.get();
+      }
+    } catch (Exception e) {
+
+    }
+
     Pageable pageable = PageRequest.of(page - 1, 6);
-    Page<Product> prds = this.productService.handleGetProducts(pageable);
+    Page<Product> prds = this.productService.handleGetProducts(pageable, name);
     long pages = prds.getTotalPages();
     List<Product> products = prds.getContent();
     model.addAttribute("products", products);

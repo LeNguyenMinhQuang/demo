@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.Quang.demo.domain.Cart;
@@ -12,6 +13,7 @@ import com.Quang.demo.domain.CartDetail;
 import com.Quang.demo.domain.Order;
 import com.Quang.demo.domain.OrderDetail;
 import com.Quang.demo.domain.Product;
+import com.Quang.demo.domain.Product_;
 import com.Quang.demo.domain.User;
 import com.Quang.demo.repository.CartDetailRepository;
 import com.Quang.demo.repository.CartRepository;
@@ -54,8 +56,25 @@ public class ProductService {
 
   // }
 
+  // tạo đối tượng Specification ~ Where trong mySQL
+  // root: đại diện table muốn truy vấn, được dùng để truy cập entity và fields
+  // CriteriaQuery: tạo ra cấu trúc tổng quan của query, dùng để modify the
+  // select, join, group by, order by, etc. (ít dùng)
+  // CriteriaBuilder: sử dụng predicates, để build ra điều kiện của câu query
+  // Predicate trả về true hoặc false
+  private Specification<Product> nameLike(String name) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
+  }
+
+  // tính đa hình của OOP
+
   public Page<Product> handleGetProducts(Pageable pageable) {
     Page<Product> products = this.productRepository.findAll(pageable);
+    return products;
+  }
+
+  public Page<Product> handleGetProducts(Pageable pageable, String name) {
+    Page<Product> products = this.productRepository.findAll(this.nameLike(name), pageable);
     return products;
   }
 
