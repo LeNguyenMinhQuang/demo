@@ -97,28 +97,28 @@
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" value="Asus"
-                                                                id="flexCheckChecked" checked>
+                                                                id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Asus
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" value="Dell"
-                                                                id="flexCheckChecked" checked>
+                                                                id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Dell
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Lenovo" id="flexCheckChecked" checked>
+                                                                value="Lenovo" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Lenovo
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" value="Acer"
-                                                                id="flexCheckChecked" checked>
+                                                                id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Acer
                                                             </label>
@@ -138,14 +138,14 @@
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Coding" id="flexCheckChecked" checked>
+                                                                value="Coding" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Coding
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Gaming" id="flexCheckChecked" checked>
+                                                                value="Gaming" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Gaming
                                                             </label>
@@ -164,16 +164,23 @@
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Coding" id="flexCheckChecked" checked>
+                                                                value="Coding" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Bigger than 10 and Smaller than 100
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Gaming" id="flexCheckChecked" checked>
+                                                                value="Gaming" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
-                                                                Bigger than 100
+                                                                Bigger than 100 and Smaller than 1000
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                value="Gaming" id="flexCheckChecked">
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Bigger than 1000
                                                             </label>
                                                         </div>
                                                     </div>

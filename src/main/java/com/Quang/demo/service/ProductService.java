@@ -5,15 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import com.Quang.demo.domain.Cart;
 import com.Quang.demo.domain.CartDetail;
 import com.Quang.demo.domain.Order;
 import com.Quang.demo.domain.OrderDetail;
 import com.Quang.demo.domain.Product;
-
 import com.Quang.demo.domain.User;
 import com.Quang.demo.repository.CartDetailRepository;
 import com.Quang.demo.repository.CartRepository;
@@ -75,10 +73,94 @@ public class ProductService {
     return products;
   }
 
-  public Page<Product> handleGetProductsWithSpec(Pageable pageable, String name) {
-    Page<Product> products = this.productRepository.findAll(ProductSpec.nameLike(name), pageable);
-    return products;
+  // name
+  // public Page<Product> handleGetProductsWithSpec(Pageable pageable, String
+  // name) {
+  // Page<Product> products =
+  // this.productRepository.findAll(ProductSpec.nameLike(name), pageable);
+  // return products;
+  // }
+
+  // price range
+  public Page<Product> handleGetProductsWithSpec(Pageable pageable, String priceRange) {
+    if (priceRange.equals("10-100")) {
+      double min = 10;
+      double max = 100;
+      Page<Product> products = this.productRepository.findAll(ProductSpec.priceRange(min, max),
+          pageable);
+      return products;
+    } else if (priceRange.equals("100-1000")) {
+      double min = 100;
+      double max = 1000;
+      Page<Product> products = this.productRepository.findAll(ProductSpec.priceRange(min, max),
+          pageable);
+      return products;
+    } else {
+      Page<Product> products = this.productRepository.findAll(pageable);
+      return products;
+    }
   }
+
+  // list price range
+  public Page<Product> handleGetProductsWithSpec(Pageable pageable, List<String> priceRange) {
+    Specification<Product> combinedSpec = (root, query, criteriaBuilder) -> criteriaBuilder.disjunction();
+    int count = 0;
+    for (String p : priceRange) {
+      double min = 0;
+      double max = 0;
+
+      switch (p) {
+        case "10-100":
+          min = 10;
+          max = 100;
+          count++;
+          break;
+        case "100-1000":
+          min = 100;
+          max = 1000;
+          count++;
+          break;
+      }
+
+      if (min != 0 && max != 0) {
+        Specification<Product> rangeSpec = ProductSpec.priceRangeList(min, max);
+        combinedSpec = combinedSpec.or(rangeSpec);
+      }
+    }
+    if (count == 0) {
+      return this.productRepository.findAll(pageable);
+    }
+
+    return this.productRepository.findAll(combinedSpec, pageable);
+
+  }
+
+  // List factory
+  // public Page<Product> handleGetProductsWithSpec(Pageable pageable,
+  // List<String> factoryList) {
+  // Page<Product> products =
+  // this.productRepository.findAll(ProductSpec.matchFactoryList(factoryList),
+  // pageable);
+  // return products;
+  // }
+
+  // Min price
+  // public Page<Product> handleGetProductsWithSpec(Pageable pageable, double
+  // minPrice) {
+  // Page<Product> products =
+  // this.productRepository.findAll(ProductSpec.minPrice(minPrice),
+  // pageable);
+  // return products;
+  // }
+
+  // Max price
+  // public Page<Product> handleGetProductsWithSpec(Pageable pageable, double
+  // maxPrice) {
+  // Page<Product> products =
+  // this.productRepository.findAll(ProductSpec.maxPrice(maxPrice),
+  // pageable);
+  // return products;
+  // }
 
   public long handleCountAllProducts() {
     return this.productRepository.count();

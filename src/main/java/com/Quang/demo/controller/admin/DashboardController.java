@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.Quang.demo.domain.Order;
-import com.Quang.demo.domain.Product;
 import com.Quang.demo.domain.User;
 import com.Quang.demo.service.ProductService;
 import com.Quang.demo.service.UserService;

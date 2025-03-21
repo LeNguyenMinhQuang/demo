@@ -1,5 +1,7 @@
 package com.Quang.demo.controller.client;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,27 +73,37 @@ public class HomePageController {
 
   @GetMapping("/shop")
   public String getShopPage(Model model, @RequestParam("page") Optional<String> pageOptional,
-      @RequestParam("name") Optional<String> nameOptional) {
-    int page = 1;
-    try {
-      if (pageOptional.isPresent()) {
-        page = Integer.parseInt(pageOptional.get());
-      }
-    } catch (Exception e) {
-      // TODO: handle exception
-    }
+      @RequestParam("name") Optional<String> nameOptional, @RequestParam("factory") Optional<String> factoryOptional,
+      @RequestParam("min-price") Optional<String> minOptional,
+      @RequestParam("max-price") Optional<String> maxOptional,
+      @RequestParam("price-range") Optional<String> priceOptional) {
+    // int page = 1;
+    // try {
+    // if (pageOptional.isPresent()) {
+    // page = Integer.parseInt(pageOptional.get());
+    // }
+    // } catch (Exception e) {
+    // // TODO: handle exception
+    // }
 
-    String name = "";
-    try {
-      if (nameOptional.isPresent()) {
-        name = nameOptional.get();
-      }
-    } catch (Exception e) {
+    // Spec
+    int page = pageOptional.isPresent() ? Integer.parseInt(pageOptional.get()) : 1;
+    String name = nameOptional.isPresent() ? nameOptional.get() : "";
+    // String factory = factoryOptional.isPresent() ? factoryOptional.get() : "";
+    double min = minOptional.isPresent() ? Double.parseDouble(minOptional.get())
+        : 0;
+    double max = maxOptional.isPresent() ? Double.parseDouble(maxOptional.get())
+        : 1000000000;
+    List<String> factoryList = factoryOptional.isPresent() ? Arrays.asList(factoryOptional.get().split(","))
+        : new ArrayList<String>();
+    // String priceRange = priceOptional.isPresent() ? priceOptional.get() : "";
+    List<String> priceRange = factoryOptional.isPresent() ? Arrays.asList(factoryOptional.get().split(","))
+        : new ArrayList<String>();
+    ;
 
-    }
-
-    Pageable pageable = PageRequest.of(page - 1, 6);
-    Page<Product> prds = this.productService.handleGetProductsWithSpec(pageable, name);
+    Pageable pageable = PageRequest.of(page - 1, 8);
+    // Page<Product> prds = this.productService.handleGetProducts(pageable, name);
+    Page<Product> prds = this.productService.handleGetProductsWithSpec(pageable, priceRange);
     long pages = prds.getTotalPages();
     List<Product> products = prds.getContent();
     model.addAttribute("products", products);
