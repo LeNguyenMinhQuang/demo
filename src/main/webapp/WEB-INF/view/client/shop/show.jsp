@@ -59,11 +59,11 @@
                                     <div class="col-lg-12">
                                         <div class="row g-4">
                                             <div class="col-xl-3">
-                                                <div class="input-group w-100 mx-auto d-flex">
+                                                <div class="input-group w-100 mx-auto d-flex" id="searchFilter">
                                                     <input type="search" class="form-control p-3" placeholder="keywords"
-                                                        aria-describedby="search-icon-1">
-                                                    <span id="search-icon-1" class="input-group-text p-3"><i
-                                                            class="fa fa-search"></i></span>
+                                                        aria-describedby="search-icon-1" />
+                                                    <button id="searchBtn" class="input-group-text p-3"><i
+                                                            class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
                                             <div class="col-6"></div>
@@ -84,7 +84,7 @@
                                         <div class="row g-4">
                                             <div class="col-lg-3">
                                                 <div class="row g-4">
-                                                    <div class="col-12">
+                                                    <div class="col-12" id="factoryFilter">
                                                         <div class="mb-2">
                                                             <h4>Factory</h4>
                                                         </div>
@@ -125,7 +125,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12" id="targetFilter">
                                                         <div class="mb-2">
                                                             <h4>Target</h4>
                                                         </div>
@@ -151,67 +151,71 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12" id="priceFilter">
                                                         <div class="mb-2">
                                                             <h4>Price</h4>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                value="Media" id="flexCheckDefault">
+                                                            <input class="form-check-input" type="checkbox" value="10-"
+                                                                id="flexCheckDefault">
                                                             <label class="form-check-label" for="flexCheckDefault">
                                                                 Smaller than 10
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Coding" id="flexCheckChecked">
+                                                                value="10-100" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Bigger than 10 and Smaller than 100
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Gaming" id="flexCheckChecked">
+                                                                value="100-1000" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Bigger than 100 and Smaller than 1000
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                value="Gaming" id="flexCheckChecked">
+                                                                value="1000+" id="flexCheckChecked">
                                                             <label class="form-check-label" for="flexCheckChecked">
                                                                 Bigger than 1000
                                                             </label>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-12">
+                                                    <div class="col-12" id="sortFilter">
                                                         <div class="mb-2">
                                                             <h4>Sort</h4>
                                                         </div>
 
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="flexRadioDefault" id="flexRadioDefault1">
+                                                            <input class="form-check-input" type="radio" value="ASC"
+                                                                id="flexRadioDefault1" name="flexRadioDefault">
                                                             <label class="form-check-label" for="flexRadioDefault1">
                                                                 ASC
                                                             </label>
                                                         </div>
 
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="flexRadioDefault" id="flexRadioDefault1">
+                                                            <input class="form-check-input" type="radio" value="DESC"
+                                                                id="flexRadioDefault2" name="flexRadioDefault">
                                                             <label class="form-check-label" for="flexRadioDefault1">
                                                                 DESC
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                            <input class="form-check-input" type="radio" value="None"
+                                                                id="flexRadioDefault3" name="flexRadioDefault" checked>
                                                             <label class="form-check-label" for="flexRadioDefault2">
                                                                 None
                                                             </label>
                                                         </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary"
+                                                            id="btnFilter">Filter</button>
                                                     </div>
 
 
@@ -219,6 +223,9 @@
                                             </div>
                                             <div class="col-lg-9">
                                                 <div class="row g-4 justify-content-center">
+                                                    <c:if test="${pages == 0}">
+                                                        <div>No result</div>
+                                                    </c:if>
                                                     <c:forEach var="product" items="${products}">
                                                         <div class="col-md-6 col-lg-6 col-xl-4">
                                                             <div class="rounded position-relative fruite-item">
@@ -227,7 +234,7 @@
                                                                         class="img-fluid w-100 rounded-top" alt="">
                                                                 </div>
                                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                                    style="top: 10px; left: 10px;">${product.factory}
+                                                                    style="top: 10px; left: 10px;">${product.target}
                                                                 </div>
                                                                 <div
                                                                     class="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -254,7 +261,7 @@
 
                                                             <c:forEach begin="1" end="${pages}" varStatus="status">
                                                                 <a class="${(status.index) eq page ? 'active page-link' : 'page-link'}"
-                                                                    href="/shop?page=${status.index}">${status.index}</a>
+                                                                    href="/shop?page=${status.index}${qs}">${status.index}</a>
 
                                                             </c:forEach>
 

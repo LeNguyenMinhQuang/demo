@@ -127,6 +127,115 @@
     });
   });
 
+  // thanh tìm kiếm trang shop
+  let searchBtn = document.getElementById("searchBtn");
+  let searchValue = document.querySelector("#searchFilter > input");
+  searchBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    let currentUrl = new URL(window.location.href);
+    let searchParams = currentUrl.searchParams;
+    console.log(searchParams);
+
+    searchParams.set("page", "1");
+    searchParams.set("name", searchValue.value);
+
+    window.location.href = currentUrl.toString();
+
+  })
+
+  // thêm param khi filter ở trang shop
+  $("#btnFilter").on("click", (e) => {
+    e.preventDefault();
+    let factoryList = [];
+    let targetList = [];
+    let priceList = [];
+    let sortValue = document.querySelector("#sortFilter .form-check-input:checked").value;
+
+    let items1 = document.querySelectorAll("#factoryFilter .form-check-input:checked");
+    let items2 = document.querySelectorAll("#targetFilter .form-check-input:checked");
+    let items3 = document.querySelectorAll("#priceFilter .form-check-input:checked");
+
+    for (let i of items1) {
+      factoryList.push(i.value);
+    }
+    for (let i of items2) {
+      targetList.push(i.value);
+    }
+    for (let i of items3) {
+      priceList.push(i.value);
+    }
+
+    console.log(factoryList, priceList, targetList, sortValue);
+
+    let currentUrl = new URL(window.location.href);
+    let searchParams = currentUrl.searchParams;
+    console.log(searchParams);
+
+    searchParams.delete("factory");
+    searchParams.delete("target");
+    searchParams.delete("price");
+
+
+    searchParams.set("page", "1");
+    searchParams.set("sort", sortValue);
+    if (factoryList.length > 0) {
+      searchParams.set("factory", factoryList.join(","));
+    }
+    if (targetList.length > 0) {
+      searchParams.set("target", targetList.join(","));
+    }
+    if (priceList.length > 0) {
+      searchParams.set("price", priceList.join(","));
+    }
+
+    window.location.href = currentUrl.toString();
+  })
+
+  //đọc url và tích vào filter
+
+  let params = new URLSearchParams(window.location.search);
+
+  if (params.has("factory")) {
+    let factories = params.get("factory").split(',');
+    let factoryFilter = document.querySelectorAll("#factoryFilter .form-check-input");
+    Array.from(factoryFilter).map((item, index) => {
+      if (factories.includes(item.value)) {
+        item.checked = true;
+      }
+    })
+  }
+
+  if (params.has("target")) {
+    let targets = params.get("target").split(',');
+    let targetFilter = document.querySelectorAll("#targetFilter .form-check-input");
+    Array.from(targetFilter).map((item, index) => {
+      if (targets.includes(item.value)) {
+        item.checked = true;
+      }
+    })
+  }
+
+  if (params.has("sort")) {
+    let factories = params.get("sort");
+    let factoryFilter = document.querySelectorAll("#sortFilter .form-check-input");
+    Array.from(factoryFilter).map((item, index) => {
+      item.checked = false;
+      if (factories.includes(item.value)) {
+        item.checked = true;
+      }
+    })
+  }
+
+  if (params.has("price")) {
+    let prices = params.get("price").split(',');
+    let priceFilter = document.querySelectorAll("#priceFilter .form-check-input");
+    Array.from(priceFilter).map((item, index) => {
+      if (prices.includes(item.value)) {
+        item.checked = true;
+      }
+    })
+  }
+
   // // Product Quantity
   // $('.quantity button').on('click', function () {
   //     var button = $(this);
