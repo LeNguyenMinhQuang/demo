@@ -74,7 +74,8 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests(authorize -> authorize
             .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-            .requestMatchers("/", "/product/**", "/login", "/logout", "/client/**", "/css/**", "/js/**", "/images/**")
+            .requestMatchers("/", "/product/**", "/login", "/logout", "/client/**", "/css/**", "/js/**", "/images/**",
+                "/register/**", "/shop/**")
             .permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())

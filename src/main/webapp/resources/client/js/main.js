@@ -1,6 +1,53 @@
 (function ($) {
   "use strict";
 
+
+  // Toast
+  // let btnsAddToCart = document.querySelectorAll(".btnAddToCart");
+  // btnsAddToCart.forEach((btn) => {
+  //   btn.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     let loginBtn = document.getElementById("loginBtn");
+  //     if (loginBtn != null) {
+  //       $.toast({
+  //         heading: "Error",
+  //         text: "Login require!",
+  //         position: "top-right",
+  //         icon: "error"
+  //       })
+  //       return;
+  //     }
+  //     const productId = btn.getAttribute("data-product-id");
+  //     const token = document.querySelector("meta[name='_csrf']").getAttribute("content")
+  //     const header = document.querySelector("meta[name='_crsf_header']").getAttribute("content");
+  //     const cartQuantity = document.querySelector("#cartSum");
+  //     $.ajax({
+  //       url: `${window.location.origin}/api/add-product-to-cart`,
+  //       beforeSend: function (xhr) {
+  //         xhr.setRequestHeader(header, token);
+  //       },
+  //       type: "POST",
+  //       data: JSON.stringify({ quantity: 1, productId: productId }),
+  //       contentType: "application/json",
+  //       success: function (response) {
+  //         const sum = +response;
+  //         cartQuantity.innerText = sum;
+  //         $.toast({
+  //           heading: "Cart",
+  //           text: "Success",
+  //           position: "top-right"
+  //         })
+  //       }
+
+  //     })
+  //     console.log("running at main.js");
+  //   })
+
+
+  // })
+
+
+
   // Spinner
   var spinner = function () {
     setTimeout(function () {
@@ -236,6 +283,8 @@
     })
   }
 
+
+
   // // Product Quantity
   // $('.quantity button').on('click', function () {
   //     var button = $(this);
@@ -253,6 +302,7 @@
   // });
 
   $(".quantity button").on("click", function () {
+    console.log("clicked")
     let change = 0;
     var button = $(this);
     var oldValue = button.parent().parent().find("input").val();

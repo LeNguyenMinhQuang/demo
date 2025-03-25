@@ -33,6 +33,12 @@
 
       <!-- Template Stylesheet -->
       <link href="/client/css/style.css" rel="stylesheet">
+
+      <meta name="_csrf" content="${_crsf.token}" />
+      <meta name="_crsf_header" content="${_crsf.headerName}" />
+
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css" rel="stylesheet">
+
     </head>
 
     <body>
@@ -87,8 +93,8 @@
                                 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
                                   <form:form action="/add-product-to-cart/${product.id}" method="post">
                                     <input type="hidden" name="${_crsf.parameterName}" value="${_crsf.token}">
-                                    <button type="submit"
-                                      class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
+                                    <button type="submit" data-product-id="${product.id}"
+                                      class="btnAddToCart mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
                                         class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
                                   </form:form>
 
@@ -123,10 +129,9 @@
       <!-- JavaScript Libraries -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="/client/lib/easing/easing.min.js"></script>
-      <script src="/client/lib/waypoints/waypoints.min.js"></script>
-      <script src="/client/lib/lightbox/js/lightbox.min.js"></script>
       <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
+
 
       <!-- Template Javascript -->
       <script src="/client/js/main.js"></script>

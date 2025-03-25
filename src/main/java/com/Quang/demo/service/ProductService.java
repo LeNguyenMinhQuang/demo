@@ -125,7 +125,7 @@ public class ProductService {
 
       switch (p) {
         case "10-":
-          min = 0;
+          min = 1;
           max = 10;
 
           break;
@@ -139,9 +139,9 @@ public class ProductService {
           max = 1000;
 
           break;
-        case "100+":
-          min = 100;
-          max = 10000000;
+        case "1000+":
+          min = 1000;
+          max = 100000;
 
           break;
       }
